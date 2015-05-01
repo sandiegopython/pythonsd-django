@@ -69,8 +69,11 @@ TEMPLATES = [
     },
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [os.path.join(BASE_DIR, 'jinja2')],
+        'DIRS': [os.path.join(BASE_DIR, 'pythonsd', 'jinja2')],
         'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'pythonsd.jinja2.environment',
+        },
     },
 ]
 
@@ -103,3 +106,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'pythonsd', 'static'),)
