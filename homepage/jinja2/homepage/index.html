@@ -6,4 +6,16 @@
 
 <h1>San Diego's Python Community</h1>
 
+<ul>
+    {% for sponsor in sponsors %}
+        <li><a href="{{ sponsor.link }}">
+            {% if sponsor.logo %}
+                <img alt="{{ sponsor.name }}" src="{{ MEDIA_URL }}{{ sponsor.logo }}">
+            {% else %}
+                {{ sponsor.name }}
+            {% endif %}
+        </a></li>
+    {% endfor %}
+</ul>
+
 {% endblock content %}
