@@ -3,4 +3,5 @@ Jinja2==2.7.3
 MarkupSafe==0.23
 dj-database-url==0.3.0
 libsass==0.7.0
+Pillow==2.9.0
 six==1.9.0

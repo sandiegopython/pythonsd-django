@@ -3,3 +3,4 @@
 /pythonsd/static/css/
 
 __pycache__/
+*.pyc
