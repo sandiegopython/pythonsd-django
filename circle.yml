@@ -1,0 +1,8 @@
+test:
+  pre:
+    - pip install coverage
+  override:
+    - coverage run manage.py test
+  post:
+    - pip install codecov
+    - codecov
