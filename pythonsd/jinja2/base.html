@@ -1,3 +1,8 @@
+{% macro nav_link(viewname, label) -%}
+    {% set view_url = url(viewname) -%}
+    <li{% if view_url == request.path %} class="active"{% endif %}><a href="{{ view_url }}">{{ label }}</a></li>
+{%- endmacro -%}
+
 <!DOCTYPE html>
 <html lang="en-us">
 
@@ -18,6 +23,18 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="{{ url('home') }}"><img src="{{ static('img/pythonsd-logo.png') }}"> SD Python User Group</a>
         </div>
+        <ul class="nav navbar-nav">
+          {{ nav_link('chat-room', 'Chat Room') }}
+          {{ nav_link('code-of-conduct', 'Code of Conduct') }}
+          {{ nav_link('getting-started', 'Getting Started') }}
+          {{ nav_link('job-posting', 'Job Posting Guidelines') }}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://github.com/pythonsd">GitHub</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/pythonsd">Google Groups</a></li>
+          <li><a href="http://www.meetup.com/pythonsd/">Meetup</a></li>
+          <li><a href="https://twitter.com/sandiegopython">Twitter</a></li>
+        </ul>
       </div>
     </nav>
     <div class="container theme-showcase" role="main">
