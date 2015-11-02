@@ -1,7 +1,10 @@
-Django==1.8
-Jinja2==2.7.3
-MarkupSafe==0.23
 dj-database-url==0.3.0
+Django==1.8
+django-revproxy==0.9.7
+Jinja2==2.7.3
 libsass==0.7.0
+MarkupSafe==0.23
 Pillow==2.9.0
 six==1.9.0
+urllib3==1.10.1
+wheel==0.24.0

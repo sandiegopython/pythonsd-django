@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, static, url
 from django.contrib import admin
 from django.views import generic
+from revproxy.views import ProxyView
 
 from homepage.views import home_view
 
@@ -13,6 +14,9 @@ urlpatterns = [
     url(r'^job-posting-guidelines.html$', generic.TemplateView.as_view(template_name='pythonsd/pages/job-posting.html'), name='job-posting'),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^$', generic.RedirectView.as_view(url='index.html', permanent=False)),
+    url(r'^(?P<path>.*)$', ProxyView.as_view(upstream='http://pythonsd.github.io/pythonsd.org/'))
 ]
 
 if settings.DEBUG:
