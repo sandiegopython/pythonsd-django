@@ -7,7 +7,7 @@ from revproxy.views import ProxyView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^$', generic.RedirectView.as_view(url='index.html', permanent=False)),
+    url(r'^$', generic.RedirectView.as_view(url='index.html', permanent=False), name='home'),
     url(r'^(?P<path>.*)$', ProxyView.as_view(upstream='http://pythonsd.github.io/pythonsd.org/'))
 ]
 
