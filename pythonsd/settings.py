@@ -105,6 +105,11 @@ USE_TZ = True
 
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static-files/'
+STATICFILES_FINDERS = (
+    'pythonsd.static_files.CompileFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'pythonsd', 'static'),)
 
