@@ -1,6 +1,8 @@
-/db.sqlite3
+/htmlcov/
 /pythonsd/media/
 /pythonsd/static/css/
+/.coverage
+/db.sqlite3
 
 __pycache__/
 *.pyc

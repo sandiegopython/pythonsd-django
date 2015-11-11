@@ -15,16 +15,23 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+PYTHONSD_STATIC_SITE = 'http://pythonsd.github.io/pythonsd.org/'
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j(nl836iin2t08)7ke29hrkfc2)1*a1la^&fq)s+e^m4-p-@r7'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+try:
+    SECRET_KEY = os.environ['SECRET_KEY']
+except KeyError:
+    SECRET_KEY = 'MOCK SECRET'
+    DEBUG = True
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,9 +43,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'homepage',
-    'sponsors',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,7 +110,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static-files/'
+STATICFILES_FINDERS = (
+    'pythonsd.static_files.CompileFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'pythonsd', 'static'),)
 
