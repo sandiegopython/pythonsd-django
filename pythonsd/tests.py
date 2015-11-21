@@ -4,9 +4,10 @@ from unittest import mock
 
 from django import test
 from django.conf import settings
+import webtest
 
-from . import jinja2, static_files
 import pythonsd.settings
+from . import jinja2, static_files, wsgi
 
 
 @mock.patch('revproxy.views.HTTP_POOLS.urlopen', return_value=mock.MagicMock(status=200))
@@ -66,3 +67,18 @@ class TestDebugMode(unittest.TestCase):
         with mock.patch('os.environ', mock_environ):
             importlib.reload(self.settings)
         self.assertIs(self.settings.DEBUG, False)
+
+
+class TestWSGIApp(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.app = webtest.TestApp(wsgi.application)
+
+    def test_admin_login(self):
+        """Test that the admin login can be reached through the WSGI App.
+
+        This test is mostly to exercise the interface.
+        """
+        response = self.app.get('/admin/login/')
+        self.assertEqual(response.status_int, 200)
