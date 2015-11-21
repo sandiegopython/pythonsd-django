@@ -37,6 +37,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
+    'raffle',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -98,7 +100,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -123,3 +125,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'pythonsd', 'static'),)
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pythonsd', 'media')
+
+LOGIN_URL = 'admin:login'
+
+MEETUP_KEY = os.environ.get('MEETUP_KEY')
+MEETUP_SECRET = os.environ.get('MEETUP_SECRET')

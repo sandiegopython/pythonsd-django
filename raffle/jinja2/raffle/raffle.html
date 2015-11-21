@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+  <form onsubmit="return false">
+    <select id="jsEventSelect">
+
+    </select>
+    <button id="jsPick">Pick</button>
+    <button id="jsClear">Clear</button>
+  </form>
+  <ul id="jsPicked">
+  </ul>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+<script>
+  (function() {
+    var eventSelect, clearButton, pickButton, option, i, event, events = {{ events|safe }};
+    eventSelect = document.getElementById('jsEventSelect');
+    for (i = 0; i < events.length; i += 1) {
+      event = events[i];
+      option = document.createElement('option');
+      option.value = i;
+      option.text = '(' + moment(event.time).format('M/D') + ') ' + event.name;
+      eventSelect.add(option);
+    }
+    function clear () {
+      var picked = document.getElementById('jsPicked');
+      while (picked.firstChild) {
+        picked.removeChild(picked.firstChild);
+      }
+      toPick = events[eventSelect.value].attendees.slice(0);
+    };
+    eventSelect.addEventListener('change', clear);
+    toPick = events[eventSelect.value].attendees.slice(0);
+    document.getElementById('jsPick').addEventListener('click', function() {
+      var pickedAttendee, imgElem, pickedIndv, pickedElem = document.getElementById('jsPicked');
+      pickedIndv = document.createElement('li');
+      pickedAttendee = toPick.splice(Math.floor(Math.random() * toPick.length), 1)[0];
+      console.log(pickedAttendee);
+      imgElem = document.createElement('img');
+      imgElem.width = 80;
+      imgElem.src = pickedAttendee.member_photo ? pickedAttendee.member_photo.thumb_link : 'http://lorempixel.com/80/80/animals?t=' + (new Date).getTime();
+      pickedIndv.appendChild(imgElem);
+      pickedIndv.appendChild(document.createTextNode(pickedAttendee.member.name));
+      pickedElem.appendChild(pickedIndv);
+    });
+    document.getElementById('jsClear').addEventListener('click', clear);
+  })();
+</script>
+{% endblock js %}
