@@ -4,6 +4,7 @@ machine:
 
 test:
   pre:
+    - pip install --requirement requirements/local.txt
     - pip install coverage
   override:
     - coverage run manage.py test

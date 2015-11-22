@@ -1,6 +1,6 @@
-import subprocess
-
 from django.contrib.staticfiles.finders import BaseFinder
+
+import tasks
 
 
 class CompileFinder(BaseFinder):
@@ -11,4 +11,4 @@ class CompileFinder(BaseFinder):
         return []
 
     def compile(self):
-        subprocess.call('make')
+        tasks.build()
