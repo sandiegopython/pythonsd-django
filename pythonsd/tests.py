@@ -4,6 +4,7 @@ Specific tests relating to one app should be in that package.
 """
 
 import importlib
+import subprocess
 import unittest
 from unittest import mock
 
@@ -43,7 +44,7 @@ class TestJinjaConfig(unittest.TestCase):
 class TestCompileFinder(unittest.TestCase):
     """Test the custom static 'Finder' class for static file compiling."""
 
-    @mock.patch('subprocess.call')
+    @mock.patch('subprocess.call', wraps=subprocess.call)
     def test_compile_collectstatic(self, mock_call):
         """A subprocess call to 'make' should be made."""
         compile_finder = static_files.CompileFinder()
