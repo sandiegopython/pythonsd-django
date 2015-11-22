@@ -4,7 +4,6 @@ Specific tests relating to one app should be in that package.
 """
 
 import importlib
-import subprocess
 import unittest
 from unittest import mock
 
@@ -13,6 +12,7 @@ from django.conf import settings
 import webtest
 
 import pythonsd.settings
+import tasks
 from . import jinja2, static_files, wsgi
 
 
@@ -44,12 +44,12 @@ class TestJinjaConfig(unittest.TestCase):
 class TestCompileFinder(unittest.TestCase):
     """Test the custom static 'Finder' class for static file compiling."""
 
-    @mock.patch('subprocess.call', wraps=subprocess.call)
+    @mock.patch('tasks.build', wraps=tasks.build)
     def test_compile_collectstatic(self, mock_call):
         """A subprocess call to 'make' should be made."""
         compile_finder = static_files.CompileFinder()
         compile_finder.list('mock argument')
-        mock_call.assert_called_with('make')
+        mock_call.assert_called_once_with()
 
 
 class TestDebugMode(unittest.TestCase):
