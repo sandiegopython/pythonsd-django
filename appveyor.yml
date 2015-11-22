@@ -1,6 +1,6 @@
 install:
   - "SET PATH=C:\\Python35;C:\\Python35\\Scripts;C:\\Program Files\\PostgreSQL\\9.4\\bin;%PATH%"
-  - "pip install -r requirements.txt"
+  - "pip install --requirement requirements/local.txt"
   - "pip install coverage"
 
 build: off

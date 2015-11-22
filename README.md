@@ -2,7 +2,7 @@
 
 Install requirements
 ```shell
-pip install -r requirements.txt
+pip install -r requirements/local.txt
 ```
 
 Compile SASS
