@@ -63,15 +63,9 @@ class TestCSSCompiling(unittest.TestCase):
         os.makedirs(tasks.CSS_DIR)
         tasks.build()
 
-    def test_other_exception(self):
-        static_root = os.path.normpath(os.path.sep.join([tasks.CSS_DIR, '..']))
-        shutil.rmtree(tasks.CSS_DIR)
-        mode = os.stat(static_root).st_mode
-        try:
-            os.chmod(static_root, 0)
-            self.assertRaises(OSError, tasks.build)
-        finally:
-            os.chmod(static_root, mode)
+    @mock.patch('os.makedirs', side_effect=OSError)
+    def test_other_exception(self, mock_makedirs):
+        self.assertRaises(OSError, tasks.build)
 
 
 class TestDebugMode(unittest.TestCase):
