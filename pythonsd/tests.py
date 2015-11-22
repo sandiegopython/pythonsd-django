@@ -4,6 +4,9 @@ Specific tests relating to one app should be in that package.
 """
 
 import importlib
+import os
+import shutil
+import stat
 import unittest
 from unittest import mock
 
@@ -41,7 +44,7 @@ class TestJinjaConfig(unittest.TestCase):
         )
 
 
-class TestCompileFinder(unittest.TestCase):
+class TestCSSCompiling(unittest.TestCase):
     """Test the custom static 'Finder' class for static file compiling."""
 
     @mock.patch('tasks.build', wraps=tasks.build)
@@ -50,6 +53,25 @@ class TestCompileFinder(unittest.TestCase):
         compile_finder = static_files.CompileFinder()
         compile_finder.list('mock argument')
         mock_call.assert_called_once_with()
+
+    def test_missing_destination(self):
+        shutil.rmtree(tasks.CSS_DIR)
+        tasks.build()
+
+    def test_existing_desintation(self):
+        shutil.rmtree(tasks.CSS_DIR)
+        os.makedirs(tasks.CSS_DIR)
+        tasks.build()
+
+    def test_other_exception(self):
+        static_root = os.path.normpath(os.path.sep.join([tasks.CSS_DIR, '..']))
+        shutil.rmtree(tasks.CSS_DIR)
+        mode = os.stat(static_root).st_mode
+        try:
+            os.chmod(static_root, 0)
+            self.assertRaises(OSError, tasks.build)
+        finally:
+            os.chmod(static_root, mode)
 
 
 class TestDebugMode(unittest.TestCase):
