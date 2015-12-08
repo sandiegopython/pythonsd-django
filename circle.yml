@@ -10,4 +10,4 @@ test:
     - coverage run manage.py test
   post:
     - pip install codecov
-    - codecov
+    - codecov --build "circle.$CIRCLE_BUILD_NUM"

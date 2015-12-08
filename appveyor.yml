@@ -9,4 +9,4 @@ test_script: coverage run manage.py test
 
 after_test:
   - pip install codecov
-  - codecov
+  - codecov --build "appveyor.%APPVEYOR_BUILD_ID%"
