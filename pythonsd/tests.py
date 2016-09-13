@@ -19,6 +19,25 @@ import tasks
 from . import jinja2, static_files, wsgi
 
 
+class TestRedirectViews(test.TestCase):
+    """Ensure project redirects function correctly."""
+
+    def test_home_redirect(self):
+        """The root path '/' should redirect to '/index.html'
+        in order to work with the reverse proxy.
+        """
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/index.html')
+
+    def test_coc_redirect(self):
+        """The shortcut '/coc' path should redirect to
+        the code of conduct page."""
+        response = self.client.get('/coc')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/pages/code-of-conduct.html')
+
+
 @mock.patch('revproxy.views.HTTP_POOLS.urlopen', return_value=mock.MagicMock(status=200))
 class TestProxyViews(test.TestCase):
     """Any path not served by this Django app should proxy to the static site."""
