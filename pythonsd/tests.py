@@ -75,7 +75,7 @@ class TestMeetupWidget(test.TestCase):
         with mock.patch('pythonsd.views.MeetupWidget.get_upcoming_events', return_value=self.expected_events) as _:
             response = self.client.get('/meetup-widget.json')
         expected = json.dumps(self.expected_events, cls=DjangoJSONEncoder)
-        self.assertJSONEqual(response.content, expected)
+        self.assertJSONEqual(response.content.decode('utf-8'), expected)
 
 
 @mock.patch('revproxy.views.HTTP_POOLS.urlopen', return_value=mock.MagicMock(status=200))
