@@ -4,6 +4,7 @@ Specific tests relating to one app should be in that package.
 """
 
 import importlib
+import json
 import os
 import shutil
 import stat
@@ -11,7 +12,9 @@ import unittest
 from unittest import mock
 
 from django import test
+from django.core.serializers.json import DjangoJSONEncoder
 from django.conf import settings
+from django.utils import timezone
 import webtest
 
 import pythonsd.settings
@@ -36,6 +39,43 @@ class TestRedirectViews(test.TestCase):
         response = self.client.get('/coc')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/pages/code-of-conduct.html')
+
+
+class TestMeetupWidget(test.TestCase):
+    """Test the Meetup.com widget of upcoming events"""
+
+    def setUp(self):
+        self.event1 = {
+            "link": "https://example.com/event-1/",
+            "name": "Event #1",
+            "datetime": timezone.now(),
+            "venue": "Venue #1",
+        }
+        self.event2 = {
+            "link": "https://example.com/event-2/",
+            "name": "Event #2",
+            "datetime": timezone.now(),
+            "venue": "Venue #2",
+        }
+        self.expected_events = [self.event1, self.event2]
+
+    @mock.patch('pythonsd.views.MeetupWidget.get_upcoming_events', return_value=[])
+    def test_no_events(self, mock_call):
+        response = self.client.get('/meetup-widget.html')
+        self.assertContains(response, 'No upcoming events')
+
+    def test_html_widget(self):
+        with mock.patch('pythonsd.views.MeetupWidget.get_upcoming_events', return_value=self.expected_events) as _:
+            response = self.client.get('/meetup-widget.html')
+        self.assertTrue('text/html' in response['Content-Type'])
+        self.assertContains(response, 'Event #1')
+        self.assertContains(response, 'Event #2')
+
+    def test_json_widget(self):
+        with mock.patch('pythonsd.views.MeetupWidget.get_upcoming_events', return_value=self.expected_events) as _:
+            response = self.client.get('/meetup-widget.json')
+        expected = json.dumps(self.expected_events, cls=DjangoJSONEncoder)
+        self.assertJSONEqual(response.content, expected)
 
 
 @mock.patch('revproxy.views.HTTP_POOLS.urlopen', return_value=mock.MagicMock(status=200))

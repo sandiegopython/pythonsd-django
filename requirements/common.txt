@@ -7,6 +7,7 @@ Jinja2==2.8
 libsass==0.11.1
 MarkupSafe==0.23
 Pillow==3.2.0
+requests==2.22.0
 six==1.10.0
 static3==0.7.0
 urllib3==1.15.1
