@@ -2,10 +2,10 @@
 Django settings for pythonsd project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.8/topics/settings/
+https://docs.djangoproject.com/en/1.11/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.8/ref/settings/
+https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 import os
 
@@ -15,11 +15,11 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-PYTHONSD_STATIC_SITE = 'http://pythonsd.github.io/pythonsd.org/'
+PYTHONSD_STATIC_SITE = 'https://pythonsd.github.io/pythonsd.org/'
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -43,9 +43,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pythonsd',
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,7 +56,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'pythonsd.urls'
@@ -86,7 +88,7 @@ WSGI_APPLICATION = 'pythonsd.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
     'default': dj_database_url.config(default='sqlite:///db.sqlite3')
@@ -94,7 +96,7 @@ DATABASES = {
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
+# https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -108,18 +110,22 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static-files/'
+
+# Due to a bug relating to the manifest not being generated before the tests run
+# We can't use CompressedManifestStaticFilesStorage (yet)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'pythonsd', 'static'),
+)
 STATICFILES_FINDERS = (
     'pythonsd.static_files.CompileFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'pythonsd', 'static'),)
-
 MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'pythonsd', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

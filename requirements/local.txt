@@ -1,4 +1,9 @@
 -r common.txt
+
+# Used for code coverage
+coverage==4.5.4
+
+# Used in local testing
+WebTest==2.0.21
 beautifulsoup4==4.4.1
 WebOb==1.6.1
-WebTest==2.0.21
