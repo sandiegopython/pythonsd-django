@@ -4,6 +4,7 @@ Specific tests relating to one app should be in that package.
 """
 
 import importlib
+import json
 import os
 import shutil
 import stat
@@ -11,12 +12,13 @@ import unittest
 from unittest import mock
 
 from django import test
+from django.core.serializers.json import DjangoJSONEncoder
 from django.conf import settings
 import webtest
 
 import pythonsd.settings
 import tasks
-from . import jinja2, static_files, wsgi
+from .. import jinja2, static_files, wsgi
 
 
 class TestRedirectViews(test.TestCase):
@@ -36,6 +38,69 @@ class TestRedirectViews(test.TestCase):
         response = self.client.get('/coc')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/pages/code-of-conduct.html')
+
+
+class TestMeetupWidget(test.TestCase):
+    """Test the Meetup.com widget of upcoming events"""
+
+    def setUp(self):
+        fp = os.path.join(os.path.dirname(__file__), 'data/meetup-events-api.json')
+        with open(fp) as fd:
+            self.api_response = json.load(fd)
+
+        self.expected_events = [
+            {
+                "link": "https://www.meetup.com/pythonsd/events/fdzbnqyznbqb/", 
+                "name": "Saturday Study Group",
+                "datetime": "2019-10-12T12:00:00-07:00",
+                "venue": "UCSD Geisel Library",
+            },
+            {
+                "link": "https://www.meetup.com/pythonsd/events/fdzbnqyznbzb/",
+                "name": "Saturday Study Group",
+                "datetime": "2019-10-19T12:00:00-07:00",
+                "venue": "UCSD Geisel Library",
+            },
+            {
+                "link": "https://www.meetup.com/pythonsd/events/zgtnxqyznbgc/",
+                "name": "Monthly Meetup",
+                "datetime": "2019-10-24T19:00:00-07:00",
+                "venue": "Qualcomm Building Q",
+            }
+        ]
+
+    @mock.patch('pythonsd.views.MeetupWidget.get_upcoming_events', return_value=[])
+    def test_no_events(self, mock_call):
+        response = self.client.get('/meetup-widget.html')
+        self.assertContains(response, 'No upcoming events')
+
+    def test_html_widget(self):
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = self.api_response
+            response = self.client.get('/meetup-widget.html')
+        self.assertTrue('text/html' in response['Content-Type'])
+        self.assertContains(response, 'UCSD Geisel Library')
+        self.assertContains(response, 'Qualcomm Building Q')
+
+    def test_json_widget(self):
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = self.api_response
+            response = self.client.get('/meetup-widget.json')
+        expected = json.dumps(self.expected_events, cls=DjangoJSONEncoder)
+        self.assertJSONEqual(response.content.decode('utf-8'), expected)
+
+    def test_api_failure(self):
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.return_value.ok = False
+            response = self.client.get('/meetup-widget.json')
+            self.assertJSONEqual(response.content.decode('utf-8'), '[]')
+
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.side_effect = Exception
+            response = self.client.get('/meetup-widget.json')
+            self.assertJSONEqual(response.content.decode('utf-8'), '[]')
 
 
 @mock.patch('revproxy.views.HTTP_POOLS.urlopen', return_value=mock.MagicMock(status=200))
