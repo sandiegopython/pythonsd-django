@@ -98,6 +98,11 @@ class TestMeetupWidget(test.TestCase):
             response = self.client.get('/meetup-widget.json')
             self.assertJSONEqual(response.content.decode('utf-8'), '[]')
 
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.side_effect = Exception
+            response = self.client.get('/meetup-widget.json')
+            self.assertJSONEqual(response.content.decode('utf-8'), '[]')
+
 
 @mock.patch('revproxy.views.HTTP_POOLS.urlopen', return_value=mock.MagicMock(status=200))
 class TestProxyViews(test.TestCase):
