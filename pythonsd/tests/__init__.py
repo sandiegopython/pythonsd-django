@@ -14,7 +14,6 @@ from unittest import mock
 from django import test
 from django.core.serializers.json import DjangoJSONEncoder
 from django.conf import settings
-from django.utils import timezone
 import webtest
 
 import pythonsd.settings
