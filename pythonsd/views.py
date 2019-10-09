@@ -29,9 +29,13 @@ class MeetupWidget(TemplateView):
         format = kwargs.get('format')
 
         if format == 'json':
-            return JsonResponse(self.get_upcoming_events(), safe=False)
+            response = JsonResponse(self.get_upcoming_events(), safe=False)
+        else:
+            response = super().get(self, request, *args, **kwargs)
 
-        return super().get(self, request, *args, **kwargs)
+        response['Access-Control-Allow-Origin'] = '*'
+
+        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

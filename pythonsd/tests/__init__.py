@@ -83,6 +83,19 @@ class TestMeetupWidget(test.TestCase):
         self.assertContains(response, 'UCSD Geisel Library')
         self.assertContains(response, 'Qualcomm Building Q')
 
+    def test_cors(self):
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = self.api_response
+            response = self.client.get('/meetup-widget.html')
+        self.assertEqual(response['Access-Control-Allow-Origin'], '*')
+
+        with mock.patch('pythonsd.views.requests.get') as mock_get:
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = self.api_response
+            response = self.client.get('/meetup-widget.json')
+        self.assertEqual(response['Access-Control-Allow-Origin'], '*')
+
     def test_json_widget(self):
         with mock.patch('pythonsd.views.requests.get') as mock_get:
             mock_get.return_value.ok = True
