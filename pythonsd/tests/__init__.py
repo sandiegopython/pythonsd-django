@@ -16,9 +16,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.conf import settings
 import webtest
 
-import pythonsd.settings
 import tasks
-from .. import jinja2, static_files, wsgi
+from config import wsgi
+from .. import jinja2, static_files
 
 
 class TestRedirectViews(test.TestCase):
@@ -50,7 +50,7 @@ class TestMeetupWidget(test.TestCase):
 
         self.expected_events = [
             {
-                "link": "https://www.meetup.com/pythonsd/events/fdzbnqyznbqb/", 
+                "link": "https://www.meetup.com/pythonsd/events/fdzbnqyznbqb/",
                 "name": "Saturday Study Group",
                 "datetime": "2019-10-12T12:00:00-07:00",
                 "venue": "UCSD Geisel Library",
@@ -163,35 +163,6 @@ class TestCSSCompiling(unittest.TestCase):
     @mock.patch('os.makedirs', side_effect=OSError)
     def test_other_exception(self, mock_makedirs):
         self.assertRaises(OSError, tasks.build)
-
-
-class TestDebugMode(unittest.TestCase):
-    """Check that the correct DEBUG state is set in each environment."""
-
-    @classmethod
-    def setUpClass(cls):
-        cls.settings = pythonsd.settings
-
-    @classmethod
-    def tearDownClass(cls):
-        importlib.reload(cls.settings)
-
-    def test_debug_default_on(self):
-        """DEBUG should be True when there is no SECRET_KEY"""
-        mock_environ = {}
-        with mock.patch('os.environ', mock_environ):
-            importlib.reload(self.settings)
-        self.assertIs(self.settings.DEBUG, True)
-
-    def test_debug_off(self):
-        """DEBUG should be False when there is a SECRET_KEY
-
-        Presence of SECRET_KEY indicates a production environment.
-        """
-        mock_environ = {'SECRET_KEY': 'some test secret'}
-        with mock.patch('os.environ', mock_environ):
-            importlib.reload(self.settings)
-        self.assertIs(self.settings.DEBUG, False)
 
 
 class TestWSGIApp(unittest.TestCase):

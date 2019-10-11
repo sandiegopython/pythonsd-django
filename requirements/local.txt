@@ -7,3 +7,6 @@ coverage==4.5.4
 WebTest==2.0.21
 beautifulsoup4==4.4.1
 WebOb==1.6.1
+
+# Used to help with Django related debugging
+django-debug-toolbar==2.0
