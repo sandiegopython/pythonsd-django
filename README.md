@@ -10,6 +10,11 @@ Install requirements
 pip install -r requirements/local.txt
 ```
 
+Setup pre-commit hooks for style checking
+```shell
+pre-commit install
+```
+
 Compile SASS
 ```shell
 invoke build
