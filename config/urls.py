@@ -5,18 +5,14 @@ from revproxy.views import ProxyView
 
 
 urlpatterns = [
-    url(r'^{}/'.format(settings.ADMIN_URL), include(admin.site.urls)),
-
-    url(r'^', include('pythonsd.urls')),
-
+    url(r"^{}/".format(settings.ADMIN_URL), include(admin.site.urls)),
+    url(r"^", include("pythonsd.urls")),
     # Proxy all unmatched requests to the static Pelican site
     # This rule should come absolutely last
-    url(r'^(?P<path>.*)$', ProxyView.as_view(upstream=settings.PYTHONSD_STATIC_SITE)),
+    url(r"^(?P<path>.*)$", ProxyView.as_view(upstream=settings.PYTHONSD_STATIC_SITE)),
 ]
 
 if settings.DEBUG:  # pragma: no cover
     import debug_toolbar
 
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    urlpatterns = [url(r"^__debug__/", include(debug_toolbar.urls))] + urlpatterns
