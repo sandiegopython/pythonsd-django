@@ -8,9 +8,11 @@ import jinja2
 
 def environment(**options):
     env = jinja2.Environment(**options)
-    env.globals.update({
-        'static': staticfiles_storage.url,
-        'url': reverse,
-        'MEDIA_URL': settings.MEDIA_URL,
-    })
+    env.globals.update(
+        {
+            "static": staticfiles_storage.url,
+            "url": reverse,
+            "MEDIA_URL": settings.MEDIA_URL,
+        }
+    )
     return env

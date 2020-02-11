@@ -4,7 +4,6 @@ import tasks
 
 
 class CompileFinder(BaseFinder):
-
     def find(self, path, all=False):
         return []
 
