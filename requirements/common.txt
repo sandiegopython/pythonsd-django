@@ -2,7 +2,7 @@
 dj-database-url==0.5.0
 
 # This is a Django app
-Django==1.11.25
+Django==1.11.28
 pytz==2019.2
 
 # Using Jinja2 instead of Django's templating
