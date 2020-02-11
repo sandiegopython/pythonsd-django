@@ -38,5 +38,6 @@ jobs:
           name: run tests
           command: |
             . .venv/bin/activate
+            pre-commit run --all-files
             coverage run manage.py test
             codecov

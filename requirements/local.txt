@@ -1,5 +1,9 @@
 -r common.txt
 
+# Used for code formatting
+black==19.3b0
+pre-commit==1.18.3
+
 # Used for code coverage
 coverage==4.5.4
 
