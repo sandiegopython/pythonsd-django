@@ -12,10 +12,12 @@ import os
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../..")
 
 
 PYTHONSD_STATIC_SITE = "https://pythonsd.github.io/pythonsd.org/"
+
+ADMIN_URL = "admin"
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,20 +25,19 @@ PYTHONSD_STATIC_SITE = "https://pythonsd.github.io/pythonsd.org/"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: don't run with debug turned on in production!
-try:
-    SECRET_KEY = os.environ["SECRET_KEY"]
-except KeyError:
-    SECRET_KEY = "MOCK SECRET"
-    DEBUG = True
-else:
-    DEBUG = False
+SECRET_KEY = "MOCK SECRET"
+DEBUG = True
+
 
 ALLOWED_HOSTS = ["*"]
 
 
+INTERNAL_IPS = ["127.0.0.1"]
+
+
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,9 +45,9 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "pythonsd",
-)
+]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -56,9 +57,9 @@ MIDDLEWARE_CLASSES = (
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-)
+]
 
-ROOT_URLCONF = "pythonsd.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -82,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "pythonsd.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database

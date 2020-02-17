@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT pythonsd.wsgi:application
+web: waitress-serve --port=$PORT config.wsgi:application
