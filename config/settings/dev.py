@@ -12,3 +12,7 @@ from .base import *  # noqa
 
 INSTALLED_APPS += ["debug_toolbar"]
 MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware"] + MIDDLEWARE
+
+
+# Enable template debugging (required for template coverage)
+TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
