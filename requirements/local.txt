@@ -6,6 +6,7 @@ pre-commit==1.18.3
 
 # Used for code coverage
 coverage==4.5.4
+django_coverage_plugin<2.0
 
 # Used in local testing
 WebTest==2.0.21
@@ -14,3 +15,5 @@ WebOb==1.6.1
 
 # Used to help with Django related debugging
 django-debug-toolbar==2.0
+
+tox<4.0

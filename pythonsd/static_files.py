@@ -5,7 +5,7 @@ import tasks
 
 class CompileFinder(BaseFinder):
     def find(self, path, all=False):
-        return []
+        return []  # pragma: no cover
 
     def list(self, ignore_patterns):
         """Perform the compile action."""
