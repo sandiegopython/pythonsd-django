@@ -5,10 +5,6 @@ dj-database-url==0.5.0
 Django==1.11.28
 pytz==2019.2
 
-# Using Jinja2 instead of Django's templating
-Jinja2==2.10.3
-MarkupSafe==1.1.1
-
 # For reverse proxying to the static Pelican site
 django-revproxy==0.9.15
 urllib3==1.25.6
