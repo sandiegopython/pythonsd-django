@@ -3,6 +3,8 @@ branch: True
 source =
   config
   pythonsd
+plugins =
+  django_coverage_plugin
 omit =
   */**/migrations/*
   */**/settings/*

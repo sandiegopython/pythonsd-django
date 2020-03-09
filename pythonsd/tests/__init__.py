@@ -18,7 +18,7 @@ import webtest
 
 import tasks
 from config import wsgi
-from .. import jinja2, static_files
+from .. import static_files
 
 
 class TestRedirectViews(test.TestCase):
@@ -128,19 +128,6 @@ class TestProxyViews(test.TestCase):
         self.client.get("/" + mock_path, follow=True)
         args, kwargs = mock_urlopen.call_args
         self.assertEqual(args[1], settings.PYTHONSD_STATIC_SITE + mock_path)
-
-
-class TestJinjaConfig(unittest.TestCase):
-    """Make sure the Jinja configuration is complete."""
-
-    def test_jinja_env(self):
-        """Ensure certain settings are in the Jinja environment."""
-        expected_subset = {"static", "url", "MEDIA_URL"}
-        full_environment = jinja2.environment().globals
-        self.assertTrue(
-            expected_subset.issubset(full_environment),
-            "Missing values: {}".format(expected_subset.difference(full_environment)),
-        )
 
 
 class TestCSSCompiling(unittest.TestCase):
