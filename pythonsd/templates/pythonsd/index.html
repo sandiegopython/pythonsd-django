@@ -1,0 +1,91 @@
+{% extends 'pythonsd/base.html' %}
+{% load static %}
+
+
+{% block metas %}<meta name="description" content="The San Diego Python User Group is a programming language special interest group with hundreds of active members and regular meetups. It is free to join and open to members of all skill levels.">{% endblock metas %}
+
+
+{% block main %}
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">San Diego Python</h1>
+      <p class="lead">San Diego Python is a Python programming language special interest group with hundreds of active members and regular meetups. It is free to join and open to members of all skill levels whether you've mastered Python or are just starting to learn.</p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <section class="mb-3">
+      <div class="row">
+        <div class="col-lg-4">
+          <h3>About us</h3>
+          <p>San Diego Python is a group for those interested in learning about Python or connecting with other Python professionals. We have a smaller weekly meetup for people to work on Python projects and a larger monthly meetup on the 4th Thursday of the month with speakers and talks.</p>
+          <p>Join us on <a href="https://www.meetup.com/pythonsd/">Meetup</a> to stay up to date with our upcoming events!</p>
+        </div>
+
+        <div class="col-lg-4">
+          <h3 id="slack-channel">Join us on Slack</h3>
+          <p>Meetup events aren't the only time for chatting. There's also a Slack channel. Sign on to ask questions, give answers, or just hang out. San Diego Python's Slack channel is available at <a href="https://pythonsd.slack.com/" rel="nofollow noopener noreferrer">pythonsd.slack.com</a>. Use <a href="https://pythonsd-slack.herokuapp.com/" rel="nofollow noopener noreferrer">this page</a> to get an invite to create your account. Slack is great place to promote a job posting at your company.</p>
+          <p>For those who prefer IRC, our Slack channel is mirrored to #sandiegopython on FreeNode.</p>
+        </div>
+
+        <div class="col-lg-4">
+          <h3>Upcoming meetups</h3>
+          <div id="meetup-widget">
+            {% for event in upcoming_events %}
+              <div class="media mb-3">
+                <div class="media-body">
+                  <p class="m-0">
+                    <a href="{{ event.link }}" rel="nofollow noopener noreferrer">{{ event.name }}</a>
+                  </p>
+                  <p class="m-0">
+                    <span>{{ event.datetime|date:"N j, fa" }}</span>
+                    {% if event.venue %}<br><span>{{ event.venue }}</span>{% endif %}
+                  </p>
+                </div>
+              </div>
+            {% empty %}
+              <p>There are no upcoming events but join our <a href="https://www.meetup.com/pythonsd/" rel="nofollow noopener noreferrer">Meetup group</a> to get notified when we have one.</p>
+            {% endfor %}
+          </div>
+          <p>Interested in giving a 5-7 minute lightning talk at the monthly meetup? <a href="http://pysd.io/talk" rel="nofollow noopener noreferrer">Please sign up!</a></p>
+        </div>
+      </div>
+    </section>
+
+    {# Sponsors #}
+    <section class="mb-3">
+      <h3>Sponsors</h3>
+      <p>These fine companies help to make San Diego Python a success.</p>
+
+      <ul class="list-unstyled">
+        <li class="media">
+          <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="mr-3" alt="Qualcomm">
+          <div class="media-body">
+            <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
+            <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
+          </div>
+        </li>
+
+        <li class="media">
+          <img src="{% static 'img/sponsors/cloudflare-logo.png' %}" class="mr-3" alt="Cloudflare">
+          <div class="media-body">
+            <h5 class="mt-0 mb-1"><a href="https://www.cloudflare.com/" rel="nofollow noopener noreferrer">Cloudflare</a></h5>
+            <p class="m-0">Cloudflare provides pizza at our monthly meetup</p>
+          </div>
+        </li>
+
+        <li class="media">
+          <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="mr-3" alt="JFrog">
+          <div class="media-body">
+            <h5 class="mt-0 mb-1"><a href="https://jfrog.com/" rel="nofollow noopener noreferrer">JFrog</a></h5>
+            <p class="m-0">JFrog sponsors our monthly meetups and provides giveaways!</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+  </div> <!-- /container -->
+
+{% endblock main %}
