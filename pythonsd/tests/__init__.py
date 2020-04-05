@@ -71,9 +71,8 @@ class TestHomepageMeetupEvents(test.TestCase):
 
         # Check that it is retreived from the cache
         with mock.patch("pythonsd.views.requests.get") as mock_get:
-            mock_get.return_value.ok = (
-                False
-            )  # Return val shouldn't matter - using cache
+            # Return val shouldn't matter - will use cache
+            mock_get.return_value.ok = False
             response = self.client.get("/")
         self.assertContains(response, "UCSD Geisel Library")
 
