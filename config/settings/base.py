@@ -118,3 +118,11 @@ STATICFILES_FINDERS = (
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+# Email
+# https://docs.djangoproject.com/en/1.11/topics/email/
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@sandiegopython.org"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
