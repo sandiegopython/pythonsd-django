@@ -80,3 +80,13 @@ X_FRAME_OPTIONS = "DENY"
 # Don't put sessions in the database
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+
+# Email
+# https://docs.djangoproject.com/en/1.11/topics/email/
+# https://anymail.readthedocs.io/en/stable/
+
+if "SENDGRID_API_KEY" in os.environ:
+    INSTALLED_APPS += ["anymail"]
+    EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+    ANYMAIL = {"SENDGRID_API_KEY": os.environ["SENDGRID_API_KEY"]}
