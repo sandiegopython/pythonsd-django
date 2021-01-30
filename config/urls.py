@@ -5,7 +5,7 @@ from revproxy.views import ProxyView
 
 
 urlpatterns = [
-    url(r"^{}/".format(settings.ADMIN_URL), include(admin.site.urls)),
+    url(r"^{}/".format(settings.ADMIN_URL), admin.site.urls),
     url(r"^", include("pythonsd.urls")),
     # Proxy all unmatched requests to the static Pelican site
     # This rule should come absolutely last
