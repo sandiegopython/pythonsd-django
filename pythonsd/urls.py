@@ -1,20 +1,21 @@
 from django.conf.urls import url
+from django.urls import path
 from django.views import generic
 
 from .views import MeetupWidget
 
 
 urlpatterns = [
-    url(
-        r"^$",
+    path(
+        "",
         generic.RedirectView.as_view(url="/index.html", permanent=False),
         name="home",
     ),
-    url(
-        r"^meetup-widget\.(?P<format>html|json)$",
+    path(
+        "meetup-widget.<str:format>",
         MeetupWidget.as_view(),
         name="meetup-widget",
     ),
-    url(r"^coc/?$", generic.RedirectView.as_view(url="/pages/code-of-conduct.html")),
+    path("coc", generic.RedirectView.as_view(url="/pages/code-of-conduct.html")),
     # url(r'^newsite/coc/$', generic.TemplateView.as_view(template_name='pythonsd/pages/code-of-conduct.html')),
 ]
