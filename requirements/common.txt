@@ -2,12 +2,12 @@
 dj-database-url==0.5.0
 
 # This is a Django app
-Django==1.11.29
+Django==2.2.17
 pytz==2019.2
 
 # For reverse proxying to the static Pelican site
 django-revproxy==0.9.15
-urllib3==1.25.6
+urllib3==1.25.11
 
 # A zero dependency WSGI server
 waitress==1.4.3
