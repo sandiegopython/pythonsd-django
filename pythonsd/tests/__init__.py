@@ -3,11 +3,9 @@
 Specific tests relating to one app should be in that package.
 """
 
-import importlib
 import json
 import os
 import shutil
-import stat
 import unittest
 from unittest import mock
 
@@ -33,9 +31,12 @@ class TestRedirectViews(test.TestCase):
         self.assertEqual(response.url, "/index.html")
 
     def test_coc_redirect(self):
-        """The shortcut '/coc' path should redirect to
+        """The shortcuts '/coc' and '/coc/' paths should redirect to
         the code of conduct page."""
         response = self.client.get("/coc")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/pages/code-of-conduct.html")
+        response = self.client.get("/coc/")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/pages/code-of-conduct.html")
 
