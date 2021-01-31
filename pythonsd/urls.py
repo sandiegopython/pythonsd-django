@@ -16,5 +16,6 @@ urlpatterns = [
         name="meetup-widget",
     ),
     path("coc", generic.RedirectView.as_view(url="/pages/code-of-conduct.html")),
+    path("coc/", generic.RedirectView.as_view(url="/pages/code-of-conduct.html")),
     # url(r'^newsite/coc/$', generic.TemplateView.as_view(template_name='pythonsd/pages/code-of-conduct.html')),
 ]
