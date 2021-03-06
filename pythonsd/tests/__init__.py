@@ -22,9 +22,13 @@ class TestBasicViews(test.TestCase):
         self.assertContains(response, "<h1>Code of Conduct</h1>")
 
     def test_coc_redirect(self):
-        """The shortcut '/coc' path should redirect to
+        """The shortcuts '/coc' and '/coc/' paths should redirect to
         the code of conduct page."""
         response = self.client.get("/coc")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/code-of-conduct/")
+
+        response = self.client.get("/coc/")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/code-of-conduct/")
 
