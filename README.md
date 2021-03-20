@@ -2,9 +2,9 @@
 
 This is the repository for the San Diego Python website at [sandiegopython.org](https://sandiegopython.org).
 
-[![Circle CI](https://circleci.com/gh/sandiegopython/pythonsd-django/tree/master.svg?style=shield)](https://circleci.com/gh/sandiegopython/pythonsd-django/tree/master)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/6u1mssp3co57mi0g/branch/master?svg=true)](https://ci.appveyor.com/project/macro1/pythonsd-django/branch/master)
-[![Requirements Status](https://requires.io/github/sandiegopython/pythonsd-django/requirements.svg?branch=master)](https://requires.io/github/sandiegopython/pythonsd-django/requirements/?branch=master)
+[![Circle CI](https://circleci.com/gh/sandiegopython/pythonsd-django/tree/main.svg?style=shield)](https://circleci.com/gh/sandiegopython/pythonsd-django/tree/main)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/6u1mssp3co57mi0g/branch/main?svg=true)](https://ci.appveyor.com/project/macro1/pythonsd-django/branch/main)
+[![Requirements Status](https://requires.io/github/sandiegopython/pythonsd-django/requirements.svg?branch=main)](https://requires.io/github/sandiegopython/pythonsd-django/requirements/?branch=main)
 
 
 ## Developing
