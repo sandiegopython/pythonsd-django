@@ -1,6 +1,7 @@
 from datetime import datetime
 import logging
 
+from django.conf import settings
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.views.generic import TemplateView
@@ -11,31 +12,17 @@ import requests
 log = logging.getLogger(__file__)
 
 
-class MeetupWidget(TemplateView):
+class HomePageView(TemplateView):
 
     """
-    Creates an HTML meetup widget that can be embedded onto the site with an iframe
+    Handles the homepage view including querying meetup.com for upcoming events
 
-    - Handles caching requests to meetup so we don't get rate limited
-    - Allows fetching JSON of events
+    - Handles caching meetup API requests to meetup so we don't get rate limited
     """
 
     cache_duration = 60 * 15
     cache_key = "pythonsd.views.MeetupWidget"
-    http_method_names = ["get", "head", "options"]
-    template_name = "pythonsd/meetup-widget.html"
-
-    def get(self, request, *args, **kwargs):
-        format = kwargs.get("format")
-
-        if format == "json":
-            response = JsonResponse(self.get_upcoming_events(), safe=False)
-        else:
-            response = super().get(self, request, *args, **kwargs)
-
-        response["Access-Control-Allow-Origin"] = "*"
-
-        return response
+    template_name = "pythonsd/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,7 +55,7 @@ class MeetupWidget(TemplateView):
                     # Always show time in local San Diego time
                     "datetime": datetime.utcfromtimestamp(e["time"] // 1000)
                     .replace(tzinfo=pytz.utc)
-                    .astimezone(pytz.timezone("America/Los_Angeles")),
+                    .astimezone(pytz.timezone(settings.TIME_ZONE)),
                     "venue": e["venue"]["name"] if "venue" in e else None,
                 }
                 for e in resp.json()

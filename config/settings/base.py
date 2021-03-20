@@ -14,9 +14,6 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../..")
 
-
-PYTHONSD_STATIC_SITE = "https://pythonsd.github.io/pythonsd.org/"
-
 ADMIN_URL = "admin"
 
 
@@ -102,18 +99,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static-files/"
 
 # Due to a bug relating to the manifest not being generated before the tests run
 # We can't use CompressedManifestStaticFilesStorage (yet)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "pythonsd", "static"),)
-STATICFILES_FINDERS = (
-    "pythonsd.static_files.CompileFinder",
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "assets", "dist"),
+    os.path.join(BASE_DIR, "pythonsd", "static"),
+]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

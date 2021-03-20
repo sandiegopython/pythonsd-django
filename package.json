@@ -1,0 +1,41 @@
+{
+  "name": "pythonsd-django",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode=production --progress --colors",
+    "watch": "webpack --config webpack.config.js --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pythonsd/pythonsd-django.git"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "author": "San Diego Python & Contributors",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/pythonsd/pythonsd-django/issues"
+  },
+  "homepage": "https://github.com/pythonsd/pythonsd-django#readme",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.14.3"
+  },
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "file-loader": "^2.0.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "sass-loader": "^7.3.1",
+    "style-loader": "^1.0.0",
+    "terser-webpack-plugin": "^2.2.1",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
+  }
+}

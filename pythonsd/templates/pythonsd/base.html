@@ -1,0 +1,78 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block metas %}{% endblock metas %}
+
+    <title>{% block title %}Home{% endblock title %} · San Diego Python</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'main.css' %}" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}" sizes="180x180">
+    <link rel="icon" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32" type="image/png">
+    <link rel="icon" href="{% static 'img/favicon-16x16.png' %}" sizes="16x16" type="image/png">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'img/sandiegopython-logo.svg' %}" alt="San Diego Python Home">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-expand" aria-controls="navbars-expand" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbars-expand">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'code-of-conduct' %}">Code of Conduct</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Support Us</a>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Organizers</a>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main">
+      {% block main %}{% endblock main %}
+    </main>
+
+    {# FOOTER #}
+    <footer class="container">
+      <hr>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <p class="small">&copy; {% now "Y" %} San Diego Python &amp; Contributors &middot; Edit this site on <a href="https://github.com/pythonsd/pythonsd-django/" rel="nofollow noopener noreferrer">GitHub</a></p>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://twitter.com/sandiegopython" rel="nofollow noopener noreferrer"><span class="fa fa-twitter fa-2x text-muted" aria-hidden="true"></span></a></li>
+            <li class="list-inline-item"><a href="https://www.meetup.com/pythonsd/" rel="nofollow noopener noreferrer"><span class="fa fa-meetup fa-2x text-muted" aria-hidden="true"></span></a></li>
+            <li class="list-inline-item"><a href="https://github.com/pythonsd/" rel="nofollow noopener noreferrer"><span class="fa fa-github fa-2x text-muted" aria-hidden="true"></span></a></li>
+            <li class="list-inline-item"><a href="https://pythonsd-slack.herokuapp.com/" rel="nofollow noopener noreferrer"><span class="fa fa-slack fa-2x text-muted" aria-hidden="true"></span></a></li>
+            <li class="list-inline-item"><a href="https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg" rel="nofollow noopener noreferrer"><span class="fa fa-youtube fa-2x text-muted" aria-hidden="true"></span></a></li>
+          </ul>
+        </div>
+      </div>
+
+
+    </footer>
+
+    <script src="{% static 'bundle.js' %}"></script>
+
+  </body>
+</html>

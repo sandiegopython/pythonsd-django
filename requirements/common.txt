@@ -5,16 +5,8 @@ dj-database-url==0.5.0
 Django==2.2.19
 pytz==2019.2
 
-# For reverse proxying to the static Pelican site
-django-revproxy==0.9.15
-urllib3==1.25.11
-
 # A zero dependency WSGI server
 waitress==1.4.3
-
-# Used for compiling SASS -> CSS
-invoke==0.12.2
-libsass==0.11.1
 
 # For connecting to various APIs (eg. Meetup.com)
 requests==2.22.0
