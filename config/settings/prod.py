@@ -74,6 +74,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 
+# If set, all requests to other domains redirect to this one
+# https://github.com/dabapps/django-enforce-host
+ENFORCE_HOST = os.environ.get("ENFORCE_HOST", None)
+
 
 # Sessions
 # https://docs.djangoproject.com/en/1.11/topics/http/sessions/
