@@ -3,7 +3,7 @@
 This is the repository for the San Diego Python website at [sandiegopython.org](https://sandiegopython.org).
 
 [![Circle CI](https://circleci.com/gh/sandiegopython/pythonsd-django/tree/main.svg?style=shield)](https://circleci.com/gh/sandiegopython/pythonsd-django/tree/main)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/6u1mssp3co57mi0g/branch/main?svg=true)](https://ci.appveyor.com/project/macro1/pythonsd-django/branch/main)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/184l9lc8y7av2fah?svg=true)](https://ci.appveyor.com/project/davidfischer/pythonsd-django)
 [![Requirements Status](https://requires.io/github/sandiegopython/pythonsd-django/requirements.svg?branch=main)](https://requires.io/github/sandiegopython/pythonsd-django/requirements/?branch=main)
 
 
@@ -11,14 +11,14 @@ This is the repository for the San Diego Python website at [sandiegopython.org](
 
 ### Prerequisites
 
-* Python 3.6+
+* Python 3.7+
 * Node (12.x recommended)
 
 ### Getting started
 
 ```shell
 pip install -r requirements/local.txt  # Install local Python requirements
-npm Install                            # Install node dependencies for CSS/JS compiling
+npm install                            # Install node dependencies for CSS/JS compiling
 npm run build                          # Build CSS/JS
 pre-commit install                     # Setup code standard pre-commit hook
 ./manage.py migrate                    # Create a local development database
