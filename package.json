@@ -15,7 +15,7 @@
     "node": "12.x"
   },
   "author": "San Diego Python & Contributors",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pythonsd/pythonsd-django/issues"
   },
