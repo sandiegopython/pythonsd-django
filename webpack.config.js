@@ -25,12 +25,12 @@ module.exports = {
     }, {
       // the file-loader emits files directly to OUTPUT_DIR/fonts
       test: /\.(woff(2)?|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file-loader?name=./fonts/[name].[ext]',
+      type: 'asset/resource',
     }, {
       // Image loader
       // the file-loader emits files directly to OUTPUT_DIR/img
       test: /\.(png|gif|jpg|jpeg|svg)$/,
-      loaders: ['file-loader?name=./img/[name].[ext]']
+      type: 'asset/resource',
     }]
   },
   optimization: {
@@ -43,7 +43,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       filename: '[name].css',
-      path: OUTPUT_DIR,
       chunkFilename: '[id].css'
     }),
 
