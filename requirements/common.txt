@@ -6,7 +6,7 @@ Django==2.2.20
 pytz==2019.2
 
 # A zero dependency WSGI server
-waitress==1.4.3
+waitress==2.1.1
 
 # For connecting to various APIs (eg. Meetup.com)
 requests==2.22.0
