@@ -24,7 +24,8 @@ ALLOWED_HOSTS = [
     "www.pythonsd.com",
     "sandiegopython.org",
     "www.sandiegopython.org",
-    "pythonsd.herokuapp.com",
+    "pythonsd.herokuapp.com",  # RIP
+    "pythonsd-django.fly.dev",
 ]
 
 
