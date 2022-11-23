@@ -1,7 +1,7 @@
 -r common.txt
 
 # Database server
-psycopg2==2.8.3 --no-binary psycopg2
+psycopg2-binary==2.9.5
 
 # Caching
 django-redis==4.10.0
