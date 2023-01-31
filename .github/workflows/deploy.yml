@@ -1,0 +1,20 @@
+# https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+# https://github.com/marketplace/actions/github-action-for-flyctl
+
+name: Deploy site to Fly.io
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy Site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
