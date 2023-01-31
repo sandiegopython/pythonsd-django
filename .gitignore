@@ -133,3 +133,5 @@ dmypy.json
 /staticfiles/
 /pythonsd/media/
 /pythonsd/static/css/
+/GIT_COMMIT
+/BUILD_DATE

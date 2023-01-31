@@ -55,7 +55,17 @@
 
       <div class="row">
         <div class="col-md-6 col-sm-12">
-          <p class="small">&copy; {% now "Y" %} San Diego Python &amp; Contributors &middot; Edit this site on <a href="https://github.com/pythonsd/pythonsd-django/" rel="nofollow noopener noreferrer">GitHub</a></p>
+          <ul class="list-inline small">
+            <li class="list-inline-item">
+              <p>&copy; {% now "Y" %} San Diego Python &amp; Contributors</p>
+            </li>
+            <li class="list-inline-item">
+              <p>Edit this site on <a href="https://github.com/sandiegopython/pythonsd-django/" rel="nofollow noopener noreferrer">GitHub</a></p>
+            </li>
+            <li class="list-inline-item">
+              <p>v{{ APP_VERSION }}{% if APP_REVISION %} (<a href="https://github.com/sandiegopython/pythonsd-django/commit/{{ APP_REVISION }}">{{ APP_REVISION }}</a>){% endif %}</p>
+            </li>
+          </ul>
         </div>
 
         <div class="col-md-6 col-sm-12 text-right">
