@@ -33,3 +33,13 @@ The entire test suite can be run with tox:
 ```shell
 tox
 ```
+
+## Deploying
+
+This site is deployed to [Fly.io](https://fly.io/).
+You will need to be a member of the San Diego Python team on Fly to deploy.
+Once you're a member of the team, you can deploy with:
+
+```shell
+make deploy
+```

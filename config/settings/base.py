@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+import json
 import os
 
 import dj_database_url
@@ -69,6 +70,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "config.context_processors.settings_processor",
             ]
         },
     }
@@ -121,3 +123,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "noreply@sandiegopython.org"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
+# App specific configuration
+with open(os.path.join(BASE_DIR, "package.json"), encoding="utf-8") as fd:
+    APP_VERSION = json.load(fd)["version"]
+
+APP_REVISION = None
+if os.path.exists(os.path.join(BASE_DIR, "GIT_COMMIT")):
+    with open(os.path.join(BASE_DIR, "GIT_COMMIT"), encoding="utf-8") as fd:
+        APP_REVISION = fd.read().strip()
