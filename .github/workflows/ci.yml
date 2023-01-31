@@ -1,0 +1,21 @@
+name: Continuous Integration Checks
+
+# All branches
+on: push
+
+jobs:
+  build:
+
+    name: Unit tests and code checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.7"
+
+      - name: Run CI
+        run: |
+          pip install "tox<4.0"
+          tox
