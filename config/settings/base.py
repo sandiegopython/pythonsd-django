@@ -125,6 +125,56 @@ DEFAULT_FROM_EMAIL = "noreply@sandiegopython.org"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 
+# Logging
+# See: https://docs.djangoproject.com/en/2.2/ref/settings/#logging
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See: http://docs.djangoproject.com/en/2.2/topics/logging
+# --------------------------------------------------------------------------
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "formatters": {
+        "succinct": {"format": "%(levelname)-8s %(asctime)s [%(name)s] %(message)s"},
+        "verbose": {
+            "format": "%(levelname)-8s %(asctime)s [%(name)s] "
+            "%(module)s.%(funcName)s():%(lineno)d - %(message)s"
+        },
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console-verbose": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "succinct",
+        },
+        "null": {
+            "class": "logging.NullHandler",
+        },
+    },
+    "loggers": {
+        "": {"level": "DEBUG", "handlers": ["console"], "propagate": False},
+        "pythonsd": {
+            "level": "DEBUG",
+            "handlers": ["console-verbose"],
+            "propagate": False,
+        },
+        "django": {"level": "INFO", "handlers": ["console"], "propagate": False},
+    },
+}
+
+
 # App specific configuration
 with open(os.path.join(BASE_DIR, "package.json"), encoding="utf-8") as fd:
     APP_VERSION = json.load(fd)["version"]

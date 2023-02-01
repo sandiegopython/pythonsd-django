@@ -31,22 +31,8 @@
 
         <div class="col-lg-4">
           <h3>Upcoming meetups</h3>
-          <div id="meetup-widget">
-            {% for event in upcoming_events %}
-              <div class="media mb-3">
-                <div class="media-body">
-                  <p class="m-0">
-                    <a href="{{ event.link }}" rel="nofollow noopener noreferrer">{{ event.name }}</a>
-                  </p>
-                  <p class="m-0">
-                    <span>{{ event.datetime|date:"N j, fa" }}</span>
-                    {% if event.venue %}<br><span>{{ event.venue }}</span>{% endif %}
-                  </p>
-                </div>
-              </div>
-            {% empty %}
-              <p>There are no upcoming events but join our <a href="https://www.meetup.com/pythonsd/" rel="nofollow noopener noreferrer">Meetup group</a> to get notified when we have one.</p>
-            {% endfor %}
+          <div id="meetup-widget" hx-get="{% url 'upcoming_events' %}" hx-trigger="load">
+            <p class="small py-5">Loading...</p>
           </div>
           <p>Interested in giving a 5-7 minute lightning talk at the monthly meetup? <a href="http://pysd.io/talk" rel="nofollow noopener noreferrer">Please sign up!</a></p>
         </div>
