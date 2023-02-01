@@ -8,7 +8,6 @@ from django.utils.decorators import method_decorator
 
 import pytz
 import requests
-from defusedxml.minidom import parseString
 from defusedxml import ElementTree
 
 
