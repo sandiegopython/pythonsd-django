@@ -22,7 +22,6 @@
   "homepage": "https://github.com/pythonsd/pythonsd-django#readme",
   "dependencies": {
     "bootstrap": "^4.4.1",
-    "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.14.3"
   },
