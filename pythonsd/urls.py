@@ -18,6 +18,7 @@ urlpatterns = [
     ),
     # XHR/Async requests
     path(r"xhr/events/", views.UpcomingEventsView.as_view(), name="upcoming_events"),
+    path(r"xhr/videos/", views.RecentVideosView.as_view(), name="recent_videos"),
 ]
 
 # These redirects handle redirecting URLs from the old static site to the new Django site

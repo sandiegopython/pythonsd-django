@@ -8,6 +8,8 @@ from django.utils.decorators import method_decorator
 
 import pytz
 import requests
+from defusedxml.minidom import parseString
+from defusedxml import ElementTree
 
 
 CACHE_DURATION = 60 * 15  # 15 minutes
@@ -69,3 +71,62 @@ class UpcomingEventsView(TemplateView):
             log.error("Error fetching Meetup event feed")
 
         return []
+
+
+@method_decorator(cache_page(CACHE_DURATION), name="dispatch")
+class RecentVideosView(TemplateView):
+
+    """Get recent videos from YouTube."""
+
+    # Our channel ID (eg. https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg)
+    YOUTUBE_CHANNEL_ID = "UCXU-oZwaHnoYUhja_yrrrGg"
+    YOUTUBE_FEED_URL = (
+        f"https://www.youtube.com/feeds/videos.xml?channel_id={YOUTUBE_CHANNEL_ID}"
+    )
+
+    template_name = "pythonsd/fragments/recent-videos.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["recent_videos"] = self.get_recent_videos()
+        return context
+
+    def get_recent_videos(self):
+        """Get recent videos from YouTube."""
+        log.debug("Requesting recent videos feed from YouTube")
+
+        try:
+
+            resp = requests.get(self.YOUTUBE_FEED_URL, timeout=5)
+        except Exception:
+            # This is a broad exception because this can throw a pretty wide range
+            # of exceptions. Most are from requests.errors unless it's a lower
+            # level exception like an SSLError or something like that.
+            log.exception("Request error fetching YouTube video feed")
+            return []
+
+        videos = []
+        if resp.ok:
+            dom = ElementTree.fromstring(resp.content)
+            ns = {
+                "atom": "http://www.w3.org/2005/Atom",
+                "yt": "http://www.youtube.com/xml/schemas/2015",
+            }
+            for entry in dom.findall("atom:entry", ns):
+                videos.append(
+                    {
+                        "id": entry.find("yt:videoId", ns).text,
+                        "title": entry.find("atom:title", ns).text,
+                        "url": entry.find("atom:link", ns).attrib["href"],
+                        # The updated date can change
+                        # But for live streams, the published date is the date
+                        # the stream was initialized in youtube, not when it was live
+                        "datetime": datetime.fromisoformat(
+                            entry.find("atom:updated", ns).text
+                        ).astimezone(pytz.timezone(settings.TIME_ZONE)),
+                    }
+                )
+        else:
+            log.error("Error fetching YouTube video feed")
+
+        return videos

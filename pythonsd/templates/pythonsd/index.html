@@ -41,34 +41,48 @@
 
     {# Sponsors #}
     <section class="mb-3">
-      <h3>Sponsors</h3>
-      <p>These fine companies help to make San Diego Python a success.</p>
+      <div class="row">
+        <div class="col-lg-6">
 
-      <ul class="list-unstyled">
-        <li class="media">
-          <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="mr-3" alt="Qualcomm">
-          <div class="media-body">
-            <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
-            <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
-          </div>
-        </li>
+          <h3>Sponsors</h3>
+          <p>These fine companies help to make San Diego Python a success.</p>
 
-        <li class="media">
-          <img src="{% static 'img/sponsors/microsoft-logo.png' %}" class="mr-3" alt="Microsoft">
-          <div class="media-body">
-            <h5 class="mt-0 mb-1"><a href="https://www.microsoft.com/" rel="nofollow noopener noreferrer">Microsoft</a></h5>
-            <p class="m-0">Microsoft sponsors food at our monthly meetup</p>
-          </div>
-        </li>
+          <ul class="list-unstyled">
+            <li class="media">
+              <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="mr-3" alt="Qualcomm">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
+                <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
+              </div>
+            </li>
 
-        <li class="media">
-          <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="mr-3" alt="JFrog">
-          <div class="media-body">
-            <h5 class="mt-0 mb-1"><a href="https://jfrog.com/" rel="nofollow noopener noreferrer">JFrog</a></h5>
-            <p class="m-0">JFrog sponsors our monthly meetups and provides giveaways!</p>
+            <li class="media">
+              <img src="{% static 'img/sponsors/microsoft-logo.png' %}" class="mr-3" alt="Microsoft">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1"><a href="https://www.microsoft.com/" rel="nofollow noopener noreferrer">Microsoft</a></h5>
+                <p class="m-0">Microsoft sponsors food at our monthly meetup</p>
+              </div>
+            </li>
+
+            <li class="media">
+              <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="mr-3" alt="JFrog">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1"><a href="https://jfrog.com/" rel="nofollow noopener noreferrer">JFrog</a></h5>
+                <p class="m-0">JFrog sponsors our monthly meetups and provides giveaways!</p>
+              </div>
+            </li>
+          </ul>
+
+        </div> <!-- /col -->
+
+        <div class="col-lg-6">
+          <h3>Recent videos &amp; streams</h3>
+
+          <div id="youtube-widget" hx-get="{% url 'recent_videos' %}" hx-trigger="load">
+            <p class="small py-5">Loading...</p>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </section>
 
   </div> <!-- /container -->

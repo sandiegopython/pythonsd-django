@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=UCXU-oZwaHnoYUhja_yrrrGg"/>
+ <id>yt:channel:</id>
+ <yt:channelId></yt:channelId>
+ <title>San Diego Python</title>
+ <link rel="alternate" href="https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg"/>
+ <author>
+  <name>San Diego Python</name>
+  <uri>https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg</uri>
+ </author>
+ <published>2014-05-27T19:31:39+00:00</published>
+ <entry>
+  <id>yt:video:MvpiCyPpAhM</id>
+  <yt:videoId>MvpiCyPpAhM</yt:videoId>
+  <yt:channelId>UCXU-oZwaHnoYUhja_yrrrGg</yt:channelId>
+  <title>San Diego Python Monthly Meetup January 2023</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=MvpiCyPpAhM"/>
+  <author>
+   <name>San Diego Python</name>
+   <uri>https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg</uri>
+  </author>
+  <published>2023-01-27T16:47:28+00:00</published>
+  <updated>2023-01-28T01:52:55+00:00</updated>
+  <media:group>
+   <media:title>San Diego Python Monthly Meetup January 2023</media:title>
+   <media:content url="https://www.youtube.com/v/MvpiCyPpAhM?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/MvpiCyPpAhM/hqdefault.jpg" width="480" height="360"/>
+   <media:description>This is our monthly meetup livestream from January 26, 2023.
+
+Meetup link: https://www.meetup.com/pythonsd/events/290263327/
+
+Thanks for coming to our stream or coming in person. Thanks to Ansir Cowork for having us there. Thanks to  Microsoft for providing the snacks, and thanks to JFrog for being awesome and having a cool giveaway!
+
+SPEAKER LINEUP
+Phebe Polk - (remote talk) - Packaging Using Pyproject.toml
+Jason Koo - Streamlit App to generate mock graph data
+Jay Miller - Adding Plugins to your Code with Pluggy
+
+
+TIMESTAMPS
+00:00 Starting Soon
+19:53 Introductions/Announcements
+35:10 Packaging Using Pyproject.toml - Phebe Polk
+55:48 Streamlit App to generate mock graph data - Jason Koo
+1:13:34 Adding Plugins to your Code with Pluggy - Jay Miller
+1:41:06 Closing remarks / Fiddling with Audio Settings</media:description>
+   <media:community>
+    <media:starRating count="5" average="5.00" min="1" max="5"/>
+    <media:statistics views="63"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:qyfmJVBZFIQ</id>
+  <yt:videoId>qyfmJVBZFIQ</yt:videoId>
+  <yt:channelId>UCXU-oZwaHnoYUhja_yrrrGg</yt:channelId>
+  <title>San Diego Python Monthly Meetup December 2022</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=qyfmJVBZFIQ"/>
+  <author>
+   <name>San Diego Python</name>
+   <uri>https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg</uri>
+  </author>
+  <published>2022-12-16T16:42:18+00:00</published>
+  <updated>2022-12-22T21:55:08+00:00</updated>
+  <media:group>
+   <media:title>San Diego Python Monthly Meetup December 2022</media:title>
+   <media:content url="https://www.youtube.com/v/qyfmJVBZFIQ?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/qyfmJVBZFIQ/hqdefault.jpg" width="480" height="360"/>
+   <media:description>This is our monthly meetup livestream from December 15, 2022.
+
+Based on feedback from chat, I was messing with the audio and I made it *much* worse. Sorry, the stream audio is inconsistent and very low in parts. I'll do better next month.
+
+Meetup link: https://www.meetup.com/pythonsd/events/sbpmqsydcqbdc/
+
+SPEAKER LINEUP
+Jorge Gimeno - Django Functional Testing
+Fulvio Casali - Debugging Django N+1 queries with a useful PostgreSQL extension
+Jay Miller - Creating an Multi-Platform Storage Queue System
+
+
+TIMESTAMPS
+00:00 Starting Soon
+16:45 Introductions/Announcements
+23:26 Django Functional Testing - Jorge Gimeno
+44:33 Debugging Django N+1 queries with a useful PostgreSQL extension - Fulvio Casali
+1:07:50 Creating an Multi-Platform Storage Queue System - Jay Miller
+1:29:19 Closing remarks / Fiddling with Audio Settings</media:description>
+   <media:community>
+    <media:starRating count="4" average="5.00" min="1" max="5"/>
+    <media:statistics views="63"/>
+   </media:community>
+  </media:group>
+ </entry>
+</feed>
