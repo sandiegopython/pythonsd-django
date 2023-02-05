@@ -16,3 +16,6 @@ whitenoise==4.1.4
 
 # Redirects requests to other hosts to this one
 django-enforce-host==1.0.1
+
+# For parsing YouTube's XML feed
+defusedxml==0.7.1

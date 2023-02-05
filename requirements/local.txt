@@ -12,6 +12,7 @@ django_coverage_plugin<2.0
 WebTest==2.0.21
 beautifulsoup4==4.4.1
 WebOb==1.6.1
+responses==0.22.0
 
 # Used to help with Django related debugging
 django-debug-toolbar==2.2.1

@@ -9,11 +9,15 @@ import unittest
 from unittest import mock
 
 from django import test
+from django.core.cache import cache
 from django.conf import settings
 from django.urls import reverse
+import responses
 import webtest
 
 from config import wsgi
+from ..views import RecentVideosView
+from ..views import UpcomingEventsView
 
 
 class TestBasicViews(test.TestCase):
@@ -33,8 +37,19 @@ class TestBasicViews(test.TestCase):
         self.assertEqual(response.url, "/code-of-conduct/")
 
 
-class TestHomepageMeetupEvents(test.TestCase):
+class TestHomepageView(test.TestCase):
+    def test_homepage(self):
+        response = self.client.get(reverse("index"))
+        self.assertContains(
+            response,
+            "San Diego Python is a Python programming language special interest group",
+        )
+
+
+class TestMeetupEventsView(test.TestCase):
     def setUp(self):
+        self.url = reverse("upcoming_events")
+
         fp = os.path.join(os.path.dirname(__file__), "data/meetup-events-api.json")
         with open(fp) as fd:
             self.api_response = json.load(fd)
@@ -60,36 +75,143 @@ class TestHomepageMeetupEvents(test.TestCase):
             },
         ]
 
-    @mock.patch("pythonsd.views.HomePageView.get_upcoming_events", return_value=[])
-    def test_no_events(self, mock_call):
-        response = self.client.get("/")
-        self.assertContains(response, "There are no upcoming events")
+    def tearDown(self):
+        super().tearDown()
+        cache.clear()
 
+    def test_no_events(self):
+        with mock.patch(
+            "pythonsd.views.UpcomingEventsView.get_upcoming_events", return_value=[]
+        ) as mock_get:
+            response = self.client.get(self.url)
+            self.assertContains(response, "There are no upcoming events")
+
+    def test_preloaded_events(self):
+        with mock.patch(
+            "pythonsd.views.UpcomingEventsView.get_upcoming_events",
+            return_value=self.expected_events,
+        ) as mock_get:
+            response = self.client.get(self.url)
+            self.assertContains(response, "UCSD Geisel Library")
+            self.assertContains(response, "Qualcomm Building Q")
+
+    @responses.activate
     def test_html_widget(self):
-        with mock.patch("pythonsd.views.requests.get") as mock_get:
-            mock_get.return_value.ok = True
-            mock_get.return_value.json.return_value = self.api_response
-            response = self.client.get("/")
+        responses.add(
+            responses.GET,
+            UpcomingEventsView.MEETUP_EVENT_API_URL,
+            json=self.api_response,
+            status=200,
+        )
+
+        response = self.client.get(self.url)
         self.assertContains(response, "UCSD Geisel Library")
         self.assertContains(response, "Qualcomm Building Q")
 
-        # Check that it is retreived from the cache
-        with mock.patch("pythonsd.views.requests.get") as mock_get:
-            # Return val shouldn't matter - will use cache
-            mock_get.return_value.ok = False
-            response = self.client.get("/")
-        self.assertContains(response, "UCSD Geisel Library")
+    @responses.activate
+    def test_api_noevents(self):
+        responses.add(
+            responses.GET,
+            UpcomingEventsView.MEETUP_EVENT_API_URL,
+            json=[],
+            status=400,
+        )
 
-    def test_api_failure(self):
-        with mock.patch("pythonsd.views.requests.get") as mock_get:
-            mock_get.return_value.ok = False
-            response = self.client.get("/")
-            self.assertContains(response, "There are no upcoming events")
+        response = self.client.get(self.url)
+        self.assertContains(response, "There are no upcoming events")
 
-        with mock.patch("pythonsd.views.requests.get") as mock_get:
-            mock_get.side_effect = Exception
-            response = self.client.get("/")
-            self.assertContains(response, "There are no upcoming events")
+    @responses.activate
+    def test_api_error(self):
+        responses.add(
+            responses.GET,
+            UpcomingEventsView.MEETUP_EVENT_API_URL,
+            body=Exception("Error connecting..."),
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "There are no upcoming events")
+
+
+class TestYouTubeRecentVideosView(test.TestCase):
+    def setUp(self):
+        self.url = reverse("recent_videos")
+
+        fp = os.path.join(os.path.dirname(__file__), "data/youtube-video-feed.xml")
+        with open(fp) as fd:
+            self.api_response = fd.read()
+
+        self.expected_videos = [
+            {
+                # These are actually datetime.datetimes
+                "datetime": "2023-01-27T17:52:55Z",
+                "id": "MvpiCyPpAhM",
+                "title": "San Diego Python Monthly Meetup January 2023",
+                "url": "https://www.youtube.com/watch?v=MvpiCyPpAhM",
+            },
+            {
+                "datetime": "2022-12-22T13:55:08Z",
+                "id": "qyfmJVBZFIQ",
+                "title": "San Diego Python Monthly Meetup December 2022",
+                "url": "https://www.youtube.com/watch?v=qyfmJVBZFIQ",
+            },
+        ]
+
+    def tearDown(self):
+        super().tearDown()
+        cache.clear()
+
+    def test_no_videos(self):
+        with mock.patch(
+            "pythonsd.views.RecentVideosView.get_recent_videos", return_value=[]
+        ) as mock_get:
+            response = self.client.get(self.url)
+            self.assertContains(response, "Check out our")
+
+    def test_preloaded_videos(self):
+        with mock.patch(
+            "pythonsd.views.RecentVideosView.get_recent_videos",
+            return_value=self.expected_videos,
+        ) as mock_get:
+            response = self.client.get(self.url)
+            self.assertContains(response, "MvpiCyPpAhM")
+            self.assertContains(response, "<iframe")
+            self.assertNotContains(response, "qyfmJVBZFIQ")
+
+    @responses.activate
+    def test_html_video_widget(self):
+        responses.add(
+            responses.GET,
+            RecentVideosView.YOUTUBE_FEED_URL,
+            body=self.api_response,
+            status=200,
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "MvpiCyPpAhM")
+        self.assertContains(response, "<iframe")
+        self.assertNotContains(response, "qyfmJVBZFIQ")
+
+    @responses.activate
+    def test_api_novideos(self):
+        responses.add(
+            responses.GET,
+            RecentVideosView.YOUTUBE_FEED_URL,
+            status=400,
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "Check out our")
+
+    @responses.activate
+    def test_api_error(self):
+        responses.add(
+            responses.GET,
+            RecentVideosView.YOUTUBE_FEED_URL,
+            body=Exception("Error connecting..."),
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "Check out our")
 
 
 class TestWSGIApp(unittest.TestCase):

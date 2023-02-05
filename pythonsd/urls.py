@@ -2,16 +2,23 @@ from django.urls import path
 from django.urls import re_path
 from django.views import generic
 
-from .views import HomePageView
+from . import views
 
 
 urlpatterns = [
-    path(r"", HomePageView.as_view(template_name="pythonsd/index.html"), name="index"),
+    path(
+        r"",
+        views.HomePageView.as_view(template_name="pythonsd/index.html"),
+        name="index",
+    ),
     path(
         r"code-of-conduct/",
         generic.TemplateView.as_view(template_name="pythonsd/code-of-conduct.html"),
         name="code-of-conduct",
     ),
+    # XHR/Async requests
+    path(r"xhr/events/", views.UpcomingEventsView.as_view(), name="upcoming_events"),
+    path(r"xhr/videos/", views.RecentVideosView.as_view(), name="recent_videos"),
 ]
 
 # These redirects handle redirecting URLs from the old static site to the new Django site

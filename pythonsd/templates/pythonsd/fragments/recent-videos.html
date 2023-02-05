@@ -1,0 +1,12 @@
+{% if recent_videos %}
+  {% with most_recent_video=recent_videos|first %}
+
+    <div class="embed-responsive embed-responsive-16by9 w-75">
+      <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+  {% endwith %}
+{% else %}
+  {# Probably some sort of YouTube error #}
+  <p>Check out our <a href="https://youtube.com/@sandiegopython" rel="nofollow noopener noreferrer">YouTube channel</a>.</p>
+{% endif %}
