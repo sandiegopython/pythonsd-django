@@ -16,6 +16,7 @@ import responses
 import webtest
 
 from config import wsgi
+from ..views import RecentVideosView
 from ..views import UpcomingEventsView
 
 
@@ -129,6 +130,88 @@ class TestMeetupEventsView(test.TestCase):
 
         response = self.client.get(self.url)
         self.assertContains(response, "There are no upcoming events")
+
+
+class TestYouTubeRecentVideosView(test.TestCase):
+    def setUp(self):
+        self.url = reverse("recent_videos")
+
+        fp = os.path.join(os.path.dirname(__file__), "data/youtube-video-feed.xml")
+        with open(fp) as fd:
+            self.api_response = fd.read()
+
+        self.expected_videos = [
+            {
+                # These are actually datetime.datetimes
+                "datetime": "2023-01-27T17:52:55Z",
+                "id": "MvpiCyPpAhM",
+                "title": "San Diego Python Monthly Meetup January 2023",
+                "url": "https://www.youtube.com/watch?v=MvpiCyPpAhM",
+            },
+            {
+                "datetime": "2022-12-22T13:55:08Z",
+                "id": "qyfmJVBZFIQ",
+                "title": "San Diego Python Monthly Meetup December 2022",
+                "url": "https://www.youtube.com/watch?v=qyfmJVBZFIQ",
+            },
+        ]
+
+    def tearDown(self):
+        super().tearDown()
+        cache.clear()
+
+    def test_no_videos(self):
+        with mock.patch(
+            "pythonsd.views.RecentVideosView.get_recent_videos", return_value=[]
+        ) as mock_get:
+            response = self.client.get(self.url)
+            self.assertContains(response, "Check out our")
+
+    def test_preloaded_videos(self):
+        with mock.patch(
+            "pythonsd.views.RecentVideosView.get_recent_videos",
+            return_value=self.expected_videos,
+        ) as mock_get:
+            response = self.client.get(self.url)
+            self.assertContains(response, "MvpiCyPpAhM")
+            self.assertContains(response, "<iframe")
+            self.assertNotContains(response, "qyfmJVBZFIQ")
+
+    @responses.activate
+    def test_html_video_widget(self):
+        responses.add(
+            responses.GET,
+            RecentVideosView.YOUTUBE_FEED_URL,
+            body=self.api_response,
+            status=200,
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "MvpiCyPpAhM")
+        self.assertContains(response, "<iframe")
+        self.assertNotContains(response, "qyfmJVBZFIQ")
+
+    @responses.activate
+    def test_api_novideos(self):
+        responses.add(
+            responses.GET,
+            RecentVideosView.YOUTUBE_FEED_URL,
+            status=400,
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "Check out our")
+
+    @responses.activate
+    def test_api_error(self):
+        responses.add(
+            responses.GET,
+            RecentVideosView.YOUTUBE_FEED_URL,
+            body=Exception("Error connecting..."),
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "Check out our")
 
 
 class TestWSGIApp(unittest.TestCase):
