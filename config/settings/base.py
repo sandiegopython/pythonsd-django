@@ -2,10 +2,10 @@
 Django settings for pythonsd project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.11/topics/settings/
+https://docs.djangoproject.com/en/3.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.11/ref/settings/
+https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import json
 import os
@@ -19,7 +19,7 @@ ADMIN_URL = "admin"
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -80,14 +80,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# --------------------------------------------------------------------------
 DATABASES = {"default": dj_database_url.config(default="sqlite:///db.sqlite3")}
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
-
+# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# --------------------------------------------------------------------------
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "America/Los_Angeles"
@@ -100,8 +100,8 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# --------------------------------------------------------------------------
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static-files/"
 
@@ -118,19 +118,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # Email
-# https://docs.djangoproject.com/en/1.11/topics/email/
-
+# https://docs.djangoproject.com/en/3.2/topics/email/
+# --------------------------------------------------------------------------
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "noreply@sandiegopython.org"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 
 # Logging
-# See: https://docs.djangoproject.com/en/2.2/ref/settings/#logging
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
-# See: http://docs.djangoproject.com/en/2.2/topics/logging
+# http://docs.djangoproject.com/en/3.2/topics/logging
+# https://docs.djangoproject.com/en/3.2/ref/settings/#logging
 # --------------------------------------------------------------------------
 LOGGING = {
     "version": 1,
@@ -176,6 +176,7 @@ LOGGING = {
 
 
 # App specific configuration
+# --------------------------------------------------------------------------
 with open(os.path.join(BASE_DIR, "package.json"), encoding="utf-8") as fd:
     APP_VERSION = json.load(fd)["version"]
 
