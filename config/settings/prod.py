@@ -12,7 +12,7 @@ import dj_database_url
 from .base import *  # noqa
 
 
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 DEBUG = False
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -34,17 +34,17 @@ ADMIN_URL = os.environ.get("ADMIN_URL", "admin")
 
 
 # Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# --------------------------------------------------------------------------
 DATABASES = {"default": dj_database_url.config()}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = 600
 
 
 # Caching
-# https://docs.djangoproject.com/en/1.11/ref/settings/#caches
+# https://docs.djangoproject.com/en/3.2/ref/settings/#caches
 # http://niwinz.github.io/django-redis/
-
+# --------------------------------------------------------------------------
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -58,9 +58,9 @@ CACHES = {
 
 
 # Security
-# https://docs.djangoproject.com/en/1.11/topics/security/
+# https://docs.djangoproject.com/en/3.2/topics/security/
 # https://devcenter.heroku.com/articles/http-routing#heroku-headers
-
+# --------------------------------------------------------------------------
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_HOST = os.environ.get("SECURE_SSL_HOST")
 SECURE_SSL_REDIRECT = True
@@ -81,22 +81,24 @@ ENFORCE_HOST = os.environ.get("ENFORCE_HOST", None)
 
 
 # Sessions
-# https://docs.djangoproject.com/en/1.11/topics/http/sessions/
+# https://docs.djangoproject.com/en/3.2/topics/http/sessions/
 # Don't put sessions in the database
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 
 # Email
-# https://docs.djangoproject.com/en/2.2/topics/email/
+# https://docs.djangoproject.com/en/3.2/topics/email/
 # https://anymail.readthedocs.io/en/stable/
-
+# --------------------------------------------------------------------------
 if "SENDGRID_API_KEY" in os.environ:
     INSTALLED_APPS += ["anymail"]
     EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
     ANYMAIL = {"SENDGRID_API_KEY": os.environ["SENDGRID_API_KEY"]}
 
+
 # Logging
+# http://docs.djangoproject.com/en/3.2/topics/logging
 # --------------------------------------------------------------------------
 LOGGING["loggers"][""]["level"] = "INFO"
 LOGGING["loggers"]["pythonsd"]["level"] = "INFO"
