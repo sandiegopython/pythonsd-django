@@ -135,12 +135,25 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
     "formatters": {
-        "succinct": {"format": "%(levelname)-8s %(asctime)s [%(name)s] %(message)s"},
+        "succinct": {
+            "format": "{levelname} {asctime} [{name}] {message}",
+            "style": "{",
+        },
         "verbose": {
-            "format": "%(levelname)-8s %(asctime)s [%(name)s] "
-            "%(module)s.%(funcName)s():%(lineno)d - %(message)s"
+            "format": (
+                "{levelname} {asctime} [{name}] "
+                "{module}.{funcName}():{lineno:d} - {message}"
+            ),
+            "style": "{",
         },
     },
     "handlers": {
@@ -152,10 +165,17 @@ LOGGING = {
         "console-verbose": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
+            "filters": ["require_debug_true"],
             "formatter": "verbose",
         },
         "console": {
             "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "filters": ["require_debug_true"],
+            "formatter": "succinct",
+        },
+        "django.server": {
+            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "succinct",
         },
@@ -171,6 +191,11 @@ LOGGING = {
             "propagate": False,
         },
         "django": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        "django.server": {
+            "handlers": ["django.server"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
 
