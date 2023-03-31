@@ -5,7 +5,7 @@ psycopg2-binary==2.9.5
 
 # Caching
 django-redis==5.2.0
-redis==3.3.10
+redis==4.4.4
 
 # Email
 django-anymail==7.0.0
