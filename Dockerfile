@@ -45,5 +45,4 @@ RUN date -u +'%Y-%m-%dT%H:%M:%SZ' > BUILD_DATE
 
 EXPOSE 8000
 
-# Increase the timeout since these PDFs take a long time to generate
-CMD ["waitress-serve", "--port=8000", "config.wsgi:application"]
+CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "config.wsgi"]
