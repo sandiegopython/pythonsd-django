@@ -7,8 +7,8 @@ from . import views
 from .sitemap import IndexSitemap, StaticViewSitemap
 
 sitemaps = {
-	"index": IndexSitemap,
-	"static": StaticViewSitemap,
+    "index": IndexSitemap,
+    "static": StaticViewSitemap,
 }
 
 
@@ -26,8 +26,12 @@ urlpatterns = [
     # XHR/Async requests
     path(r"xhr/events/", views.UpcomingEventsView.as_view(), name="upcoming_events"),
     path(r"xhr/videos/", views.RecentVideosView.as_view(), name="recent_videos"),
-	path(r"sitemap.xml", sitemap, {"sitemaps": sitemaps},
-        	name="django.contrib.sitemaps.views.sitemap"),
+    path(
+        r"sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
 ]
 
 # These redirects handle redirecting URLs from the old static site to the new Django site
