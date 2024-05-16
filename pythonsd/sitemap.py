@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
