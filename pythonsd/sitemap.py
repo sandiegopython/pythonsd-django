@@ -7,7 +7,6 @@ from django.urls import reverse
 class IndexSitemap(Sitemap):
 	changefreq = 'weekly'
 	protocol = 'https'
-	lastmod = datetime(2024, 5, 15, 0, 0, 0, tzinfo=timezone.utc)
 	priority = 1.0
 
 	def items(self):
