@@ -1,7 +1,7 @@
 -r common.txt
 
 # Used for code formatting
-black==22.8.0
+black==24.3.0
 pre-commit==2.20.0
 
 # Used for code coverage
