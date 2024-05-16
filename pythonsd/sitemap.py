@@ -21,7 +21,6 @@ class IndexSitemap(Sitemap):
 class StaticViewSitemap(Sitemap):
 	changefreq = 'monthly'
 	protocol = 'https'
-	lastmod = datetime(2024, 5, 15, 0, 0, 0, tzinfo=timezone.utc)
 	priority = 0.8
 
 	def items(self):
