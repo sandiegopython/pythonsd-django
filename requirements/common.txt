@@ -13,7 +13,7 @@ gunicorn==20.1.0
 requests==2.22.0
 
 # For serving static assets from the WSGI server
-whitenoise==4.1.4
+whitenoise==6.5.0
 
 # Redirects requests to other hosts to this one
 django-enforce-host==1.0.1
