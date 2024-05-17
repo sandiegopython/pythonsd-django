@@ -7,7 +7,7 @@ Django==3.2.19
 pytz==2022.7.1
 
 # A zero dependency WSGI server
-gunicorn==20.1.0
+gunicorn==22.0.0
 
 # For connecting to various APIs (eg. Meetup.com)
 requests==2.22.0
