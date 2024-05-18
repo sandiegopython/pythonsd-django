@@ -214,6 +214,12 @@ class TestYouTubeRecentVideosView(test.TestCase):
         self.assertContains(response, "Check out our")
 
 
+class TestSitemap(test.TestCase):
+    def test_sitemap(self):
+        resp = self.client.get("/sitemap.xml")
+        self.assertEqual(resp.status_code, 200)
+
+
 class TestWSGIApp(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

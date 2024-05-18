@@ -1,7 +1,12 @@
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 name: Continuous Integration Checks
 
-# All branches
-on: push
+# All PRs as well as pushes to main
+on:
+  push:
+    branches:
+    - main
+  pull_request:
 
 jobs:
   build:
