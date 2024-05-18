@@ -1,0 +1,8 @@
+# This is a sample of environment variables which are used only to run Docker locally.
+# These are never used in production.
+
+# Use a strong secret in production
+SECRET_KEY="this-is-a-bad-secret"
+
+# In production, we use postgres but for testing a deployment, using SQLite is fine
+DATABASE_URL="sqlite:///db.sqlite3"

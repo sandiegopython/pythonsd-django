@@ -1,11 +1,10 @@
 -r common.txt
 
 # Database server
-psycopg2-binary==2.9.5
+psycopg2-binary==2.9.9
 
 # Caching
-django-redis==5.2.0
-redis==3.3.10
+django-redis==5.4.0
 
 # Email
-django-anymail==7.0.0
+django-anymail==10.3
