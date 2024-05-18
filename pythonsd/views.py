@@ -16,7 +16,6 @@ log = logging.getLogger(__file__)
 
 
 class HomePageView(TemplateView):
-
     """Displays the homepage."""
 
     template_name = "pythonsd/index.html"
@@ -24,7 +23,6 @@ class HomePageView(TemplateView):
 
 @method_decorator(cache_page(CACHE_DURATION), name="dispatch")
 class UpcomingEventsView(TemplateView):
-
     """Get upcoming events from Meetup."""
 
     MEETUP_EVENT_API_URL = "https://api.meetup.com/pythonsd/events"
@@ -74,7 +72,6 @@ class UpcomingEventsView(TemplateView):
 
 @method_decorator(cache_page(CACHE_DURATION), name="dispatch")
 class RecentVideosView(TemplateView):
-
     """Get recent videos from YouTube."""
 
     # Our channel ID (eg. https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg)

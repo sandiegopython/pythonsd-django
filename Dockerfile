@@ -7,10 +7,16 @@ LABEL maintainer="https://github.com/sandiegopython"
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-
 RUN apt-get update
+RUN apt-get install -y --no-install-recommends curl
+
+# Install Node v20
+# This should be run before apt-get install nodejs
+# https://github.com/nodesource/distributions
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+
 RUN apt-get install -y --no-install-recommends \
-    nodejs npm \
+    nodejs \
     make \
     build-essential \
     g++ \
@@ -22,12 +28,13 @@ WORKDIR /code
 
 COPY . /code/
 
-RUN set -ex && \
+# Cache dependencies when building which should result in faster docker builds
+RUN --mount=type=cache,target=/root/.cache/pip set -ex && \
     pip install --upgrade --no-cache-dir pip && \
-    pip install --no-cache-dir -r /code/requirements.txt && \
-    pip install --no-cache-dir -r /code/requirements/local.txt
+    pip install -r /code/requirements.txt && \
+    pip install -r /code/requirements/local.txt
 
-# Build static assets
+# Build JS/static assets
 RUN npm install
 RUN npm run build
 
