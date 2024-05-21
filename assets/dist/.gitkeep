@@ -1,0 +1,2 @@
+This file silences a dev-only Django warning
+that occurs when the staticfiles directory doesn't exist.
