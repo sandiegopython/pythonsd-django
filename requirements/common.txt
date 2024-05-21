@@ -10,7 +10,7 @@ pytz==2022.7.1
 gunicorn==22.0.0
 
 # For connecting to various APIs (eg. Meetup.com)
-requests==2.31.0
+requests==2.32.0
 
 # For serving static assets from the WSGI server
 whitenoise==6.5.0
