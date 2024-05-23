@@ -26,7 +26,6 @@ ALLOWED_HOSTS = [
     "www.pythonsd.com",
     "sandiegopython.org",
     "www.sandiegopython.org",
-    "pythonsd.herokuapp.com",  # RIP
     "pythonsd-django.fly.dev",
 ]
 
@@ -62,7 +61,6 @@ if "REDIS_URL" in os.environ:
 
 # Security
 # https://docs.djangoproject.com/en/3.2/topics/security/
-# https://devcenter.heroku.com/articles/http-routing#heroku-headers
 # --------------------------------------------------------------------------
 if "SECURE_SSL_HOST" in os.environ:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

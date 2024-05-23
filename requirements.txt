@@ -2,5 +2,5 @@
 # Install requirements for local development with:
 # pip install -r requirements/local.txt
 
-# Requirements needed by Heroku for deployment
+# Requirements needed for deployment
 -r requirements/deployment.txt
