@@ -1,22 +1,22 @@
 # Helper for transforming a database URL envvar
 # to a Django connection string
-dj-database-url==0.5.0
+dj-database-url==2.1.0
 
 # This is a Django app
-Django==3.2.18
+Django==3.2.25
 pytz==2022.7.1
 
 # A zero dependency WSGI server
-gunicorn==20.1.0
+gunicorn==22.0.0
 
 # For connecting to various APIs (eg. Meetup.com)
-requests==2.22.0
+requests==2.32.0
 
 # For serving static assets from the WSGI server
-whitenoise==4.1.4
+whitenoise==6.5.0
 
 # Redirects requests to other hosts to this one
-django-enforce-host==1.0.1
+django-enforce-host==1.1.0
 
 # For parsing YouTube's XML feed
 defusedxml==0.7.1
