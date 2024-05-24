@@ -23,7 +23,8 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url 'index' %}">
+      {% url 'index' as index_url %}
+      <a class="navbar-brand" href="{% if request.path != index_url %}{{ index_url }}{% else %}#{% endif %}">
         <img src="{% static 'img/sandiegopython-logo.svg' %}" alt="San Diego Python Home">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-expand" aria-controls="navbars-expand" aria-expanded="false" aria-label="Toggle navigation">
