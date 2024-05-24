@@ -23,14 +23,10 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    {% url 'index' as index_url %}
-    {% if request.path == index_url %}
-		<img src="{% static 'img/sandiegopython-logo.svg' %}" id="navbar-logo" class="navbar-brand" alt="San Diego Python Home">
-    {% else %}
-      <a class="navbar-brand" href="{{ index_url }}">
-		<img src="{% static 'img/sandiegopython-logo.svg' %}" id="navbar-logo" alt="San Diego Python Home">
+      {% url 'index' as index_url %}
+      <a class="navbar-brand" href="{% if request.path != index_url %}{{ index_url }}{% else %}#{% endif %}">
+        <img src="{% static 'img/sandiegopython-logo.svg' %}" id="navbar-logo" alt="San Diego Python Home">
       </a>
-    {% endif %}
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-expand" aria-controls="navbars-expand" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
