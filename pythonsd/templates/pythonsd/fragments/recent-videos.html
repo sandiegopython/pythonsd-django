@@ -1,8 +1,18 @@
 {% if recent_videos %}
   {% with most_recent_video=recent_videos|first %}
 
+    {% comment %}
+    In addition to running the "privacy" domain for YouTube (youtube-nocookie),
+    we are sandboxing YouTube to prevent it from setting cookies among other things.
+    The "allow-popups" flags allow people to hit the "Watch on YouTube" button
+    on the video player which navigates users to YouTube.
+
+    See:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#allow
+    {% endcomment %}
     <div class="embed-responsive embed-responsive-16by9 w-75">
-      <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}?html5=1" title="YouTube video player" frameborder="0" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
   {% endwith %}
