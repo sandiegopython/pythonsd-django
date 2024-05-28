@@ -11,6 +11,7 @@ from unittest import mock
 from django import test
 from django.core.cache import cache
 from django.conf import settings
+from django.db.models import QuerySet
 from django.urls import reverse
 import responses
 import webtest
@@ -21,6 +22,12 @@ from ..views import UpcomingEventsView
 
 
 class TestBasicViews(test.TestCase):
+    def test_organizers(self):
+        response = self.client.get(reverse("organizers"))
+        self.assertContains(response, "<h1>Organizers</h1>")
+        self.assertIsInstance(response.context["active_organizers"], QuerySet)
+        # self.assertIsInstance(response.context["past_organizers"], QuerySet)
+
     def test_code_of_conduct(self):
         response = self.client.get(reverse("code-of-conduct"))
         self.assertContains(response, "<h1>Code of Conduct</h1>")
