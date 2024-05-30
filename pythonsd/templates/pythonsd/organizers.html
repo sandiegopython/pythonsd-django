@@ -7,9 +7,7 @@
 
 <p>If you would like to reach out, please contact the <a href="mailto:sandiegopython-organizers@googlegroups.com">Python SD Organizers</a>.</p>
 
-{% comment %} <h3>Active Organizers</h3> {% endcomment %}
-
-{% for organizer in active_organizers %}
+{% for organizer in organizers %}
     <h5>{{ organizer.name }}</h5>
     <p><a href="{{ organizer.meetup_url }}" rel="nofollow noopener noreferrer" target="_blank">Meetup</a>
     {% if organizer.linkedin_url %}
@@ -17,17 +15,6 @@
     {% endif %}
     </p>
 {% endfor %}
-
-{% comment %} <h3>Past Organizers</h3>
-
-{% for organizer in past_organizers %}
-    <h5>{{ organizer.name }}</h5>
-    <p><a href="{{ organizer.meetup_url }}" rel="nofollow noopener noreferrer" target="_blank">Meetup Profile</a>
-    {% if organizer.linkedin_url %}
-        |&nbsp;<a href="{{ organizer.linkedin_url }}" rel="nofollow noopener noreferrer" target="_blank">LinkedIn Profile</a>
-    {% endif %}
-    </p>
-{% endfor %} {% endcomment %}
 
 </div>
 {% endblock main %}

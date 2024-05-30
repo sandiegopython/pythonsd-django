@@ -10,8 +10,6 @@ from unittest import mock
 
 from django import test
 from django.core.cache import cache
-from django.conf import settings
-from django.db.models import QuerySet
 from django.urls import reverse
 import responses
 import webtest
@@ -19,15 +17,10 @@ import webtest
 from config import wsgi
 from ..views import RecentVideosView
 from ..views import UpcomingEventsView
+from ..models import Organizer
 
 
 class TestBasicViews(test.TestCase):
-    def test_organizers(self):
-        response = self.client.get(reverse("organizers"))
-        self.assertContains(response, "<h1>Organizers</h1>")
-        self.assertIsInstance(response.context["active_organizers"], QuerySet)
-        # self.assertIsInstance(response.context["past_organizers"], QuerySet)
-
     def test_code_of_conduct(self):
         response = self.client.get(reverse("code-of-conduct"))
         self.assertContains(response, "<h1>Code of Conduct</h1>")
@@ -51,6 +44,29 @@ class TestHomepageView(test.TestCase):
             response,
             "San Diego Python is a Python programming language special interest group",
         )
+
+
+class TestOrganizersView(test.TestCase):
+    def test_organizers(self):
+        org1 = Organizer(
+            name="First organizer",
+            meetup_url="http://example.com/meetup",
+            linkedin_url="http://example.com/linkedin",
+            active=True,
+        )
+        org1.save()
+
+        org2 = Organizer(
+            name="Second organizer",
+            meetup_url="http://example.com/meetup",
+            active=False,
+        )
+        org2.save()
+
+        response = self.client.get(reverse("organizers"))
+        self.assertContains(response, "<h1>Organizers</h1>")
+        self.assertContains(response, org1.name)
+        self.assertNotContains(response, org2.name)
 
 
 class TestMeetupEventsView(test.TestCase):
