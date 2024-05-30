@@ -17,8 +17,30 @@ import responses
 import webtest
 
 from config import wsgi
+from ..models import Organizer
 from ..views import RecentVideosView
 from ..views import UpcomingEventsView
+
+
+class OrganizerTestCase(test.TestCase):
+    def setUp(self):
+        Organizer.objects.create(
+            name="David Fischer",
+            meetup_url="https://www.meetup.com/members/35125652/",
+            linkedin_url="https://www.linkedin.com/in/davidjamesfischer",
+        )
+        Organizer.objects.create(
+            name="Micah Denbraver",
+            meetup_url="https://www.meetup.com/members/76383362/",
+            active=False,
+        )
+
+    def test_organizer__str__(self):
+        """Organizer __str__ is properly displayed as the name field"""
+        david = Organizer.objects.get(name="David Fischer")
+        micah = Organizer.objects.get(name="Micah Denbraver")
+        self.assertEqual(str(david), "David Fischer")
+        self.assertEqual(str(micah), "Micah Denbraver")
 
 
 class TestBasicViews(test.TestCase):
