@@ -26,7 +26,6 @@ class TestBasicViews(test.TestCase):
         response = self.client.get(reverse("organizers"))
         self.assertContains(response, "<h1>Organizers</h1>")
         self.assertIsInstance(response.context["active_organizers"], QuerySet)
-        # self.assertIsInstance(response.context["past_organizers"], QuerySet)
 
     def test_code_of_conduct(self):
         response = self.client.get(reverse("code-of-conduct"))
