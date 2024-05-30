@@ -1,0 +1,42 @@
+@tailwind base;
+
+/* https://tailwindcss.com/docs/preflight#extending-preflight */
+/* https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles */
+@layer base {
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+
+  a {
+    @apply text-sky-600;
+  }
+  a:hover, a:active {
+    @apply underline;
+  }
+
+  blockquote,
+  dl,
+  dd,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  figure,
+  p,
+  ul,
+  pre {
+    @apply mb-4;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;

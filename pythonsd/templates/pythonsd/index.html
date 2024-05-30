@@ -7,19 +7,19 @@
 
 {% block main %}
 
-  <div class="jumbotron">
-    <div class="container">
-      <h1 class="display-3">San Diego Python</h1>
+  <div class="bg-[url('/static-files/img/saturday-group-background.jpg')] bg-cover bg-no-repeat bg-[50%]">
+    <div class="container mx-auto min-h-64 align-middle">
+      <h1 class="text-5xl font-bold">San Diego Python</h1>
       <p class="lead">San Diego Python is a Python programming language special interest group with hundreds of active members and regular meetups. It is free to join and open to members of all skill levels whether you've mastered Python or are just starting to learn.</p>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container mx-auto">
 
     <section class="mb-3">
       <div class="row">
         <div class="col-lg-4">
-          <h3>About us</h3>
+          <h2>About us</h2>
           <p>San Diego Python is a group for those interested in learning about Python or connecting with other Python professionals. We have a smaller weekly meetup for people to work on Python projects and a larger monthly meetup on the 4th Thursday of the month with speakers and talks.</p>
           <p>Join us on <a href="https://www.meetup.com/pythonsd/">Meetup</a> to stay up to date with our upcoming events!</p>
         </div>
@@ -49,7 +49,7 @@
 
           <ul class="list-unstyled">
             <li class="media">
-              <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="mr-3" alt="Qualcomm">
+              <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="h-16 mr-3" alt="Qualcomm">
               <div class="media-body">
                 <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
                 <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
@@ -57,7 +57,7 @@
             </li>
 
             <li class="media">
-              <img src="{% static 'img/sponsors/neo4j-logo.png' %}" class="mr-3" alt="Neo4j">
+              <img src="{% static 'img/sponsors/neo4j-logo.png' %}" class="h-16 mr-3" alt="Neo4j">
               <div class="media-body">
                 <h5 class="mt-0 mb-1"><a href="https://neo4j.com/" rel="nofollow noopener noreferrer">Neo4j</a></h5>
                 <p class="m-0">Neo4j is providing food at our monthly meetup</p>
@@ -65,7 +65,7 @@
             </li>
 
             <li class="media">
-              <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="mr-3" alt="JFrog">
+              <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="h-16 mr-3" alt="JFrog">
               <div class="media-body">
                 <h5 class="mt-0 mb-1"><a href="https://jfrog.com/" rel="nofollow noopener noreferrer">JFrog</a></h5>
                 <p class="m-0">JFrog sponsors our monthly meetups and provides giveaways!</p>

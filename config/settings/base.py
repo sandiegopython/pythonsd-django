@@ -113,6 +113,8 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "assets", "dist"),
     os.path.join(BASE_DIR, "pythonsd", "static"),
+    # Only available after running `npm install`
+    os.path.join(BASE_DIR, "node_modules/htmx.org/dist"),
 ]
 
 MEDIA_URL = "/media/"
