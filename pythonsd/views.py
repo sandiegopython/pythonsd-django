@@ -33,9 +33,6 @@ class OrganizersView(TemplateView):
         context["active_organizers"] = (
             Organizer.objects.filter(active=True).order_by('name')
         )
-        # context["past_organizers"] = (
-        #     Organizer.objects.filter(active=False).order_by('name')
-        # )
         return context
 
 
