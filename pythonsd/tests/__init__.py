@@ -11,6 +11,7 @@ from unittest import mock
 from django import test
 from django.core.cache import cache
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 import responses
 import webtest
 
@@ -18,6 +19,15 @@ from config import wsgi
 from ..views import RecentVideosView
 from ..views import UpcomingEventsView
 from ..models import Organizer
+
+
+# Bytes representing a valid 1-pixel PNG
+ONE_PIXEL_PNG_BYTES = (
+    b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00"
+    b"\x01\x08\x04\x00\x00\x00\xb5\x1c\x0c\x02\x00\x00\x00\x0bIDATx"
+    b"\x9cc\xfa\xcf\x00\x00\x02\x07\x01\x02\x9a\x1c1q\x00\x00\x00"
+    b"\x00IEND\xaeB`\x82"
+)
 
 
 class TestBasicViews(test.TestCase):
@@ -53,6 +63,9 @@ class TestOrganizersView(test.TestCase):
             meetup_url="http://example.com/meetup",
             linkedin_url="http://example.com/linkedin",
             active=True,
+            photo=SimpleUploadedFile(
+                name="test.png", content=ONE_PIXEL_PNG_BYTES, content_type="image/png"
+            ),
         )
         org1.save()
 
@@ -60,6 +73,9 @@ class TestOrganizersView(test.TestCase):
             name="Second organizer",
             meetup_url="http://example.com/meetup",
             active=False,
+            photo=SimpleUploadedFile(
+                name="test.png", content=ONE_PIXEL_PNG_BYTES, content_type="image/png"
+            ),
         )
         org2.save()
 

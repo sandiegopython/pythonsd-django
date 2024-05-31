@@ -131,7 +131,7 @@ dmypy.json
 ############################################
 /node_modules/
 /staticfiles/
-/pythonsd/media/
+/media/
 /pythonsd/static/css/
 /GIT_COMMIT
 /BUILD_DATE
