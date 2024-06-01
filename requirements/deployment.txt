@@ -8,3 +8,6 @@ django-redis==5.4.0
 
 # Email
 django-anymail==10.3
+
+# Cloud storage for media storage (S3, R2, etc.)
+django-storages[s3]==1.14.3

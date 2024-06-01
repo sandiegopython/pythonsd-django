@@ -20,22 +20,24 @@ RUN apt-get install -y --no-install-recommends \
     make \
     build-essential \
     g++ \
+    postgresql-client \
     git
 
 RUN mkdir -p /code
 
 WORKDIR /code
 
+# Requirements are installed here to ensure they will be cached.
+# https://docs.docker.com/build/cache/#use-the-dedicated-run-cache
+COPY ./requirements /requirements
+RUN pip install --upgrade pip
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r /requirements/deployment.txt
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r /requirements/local.txt
+
 COPY . /code/
 
-# Cache dependencies when building which should result in faster docker builds
-RUN --mount=type=cache,target=/root/.cache/pip set -ex && \
-    pip install --upgrade --no-cache-dir pip && \
-    pip install -r /code/requirements.txt && \
-    pip install -r /code/requirements/local.txt
-
 # Build JS/static assets
-RUN npm install
+RUN --mount=type=cache,target=/root/.npm npm install
 RUN npm run build
 
 RUN python manage.py collectstatic --noinput
@@ -52,4 +54,4 @@ RUN date -u +'%Y-%m-%dT%H:%M:%SZ' > BUILD_DATE
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "config.wsgi"]
+CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "--log-file", "-", "config.wsgi"]

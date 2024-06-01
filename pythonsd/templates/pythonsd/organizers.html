@@ -1,4 +1,5 @@
 {% extends 'pythonsd/base.html' %}
+{% load static %}
 
 
 {% block title %}Organizers{% endblock title %}
@@ -16,7 +17,7 @@
   {% for organizer in organizers %}
   <div class="col mb-4">
     <div class="card">
-      <img src="{{ organizer.photo.url }}" class="card-img-top" alt="{{ organizer.name }}">
+      <img src="{% get_media_prefix %}{{ organizer.photo.name }}" class="card-img-top" alt="{{ organizer.name }}">
       <div class="card-body">
         <h5 class="card-title">{{ organizer.name }}</h5>
         <p class="card-text">{{ organizer.description }}</p>

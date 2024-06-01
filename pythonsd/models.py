@@ -12,7 +12,7 @@ class Organizer(models.Model):
         help_text="Set to False to hide this organizer from the organizers page",
     )
 
-    # For production, store the image in Cloud Storage (S3, Appwrite, etc.)
+    # For production, store the image in Cloud Storage (S3, R2, Appwrite, etc.)
     photo = models.ImageField(
         upload_to="organizers/",
         help_text="Recommended size of 400*400px or larger square",
