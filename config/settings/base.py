@@ -85,6 +85,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 # --------------------------------------------------------------------------
 DATABASES = {"default": dj_database_url.config(default="sqlite:///db.sqlite3")}
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Internationalization
@@ -115,7 +116,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "pythonsd", "static"),
 ]
 
-MEDIA_URL = "/media/"
+MEDIA_URL = os.environ.get("MEDIA_URL", default="/media/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 

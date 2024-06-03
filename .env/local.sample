@@ -1,8 +1,35 @@
 # This is a sample of environment variables which are used only to run Docker locally.
 # These are never used in production.
 
+# Django
+# ------------------------------------------------------------------------------
+# Run Django in production mode (DEBUG=False)
+DJANGO_SETTINGS_MODULE=config.settings.prod
+
 # Use a strong secret in production
 SECRET_KEY="this-is-a-bad-secret"
 
-# In production, we use postgres but for testing a deployment, using SQLite is fine
-DATABASE_URL="sqlite:///db.sqlite3"
+
+# PostgreSQL
+# ------------------------------------------------------------------------------
+# This must match .env/postgres
+DATABASE_URL=pgsql://localuser:localpass@postgres:5432/sandiegopython
+
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+
+# S3/R2 Media Storage
+# ------------------------------------------------------------------------------
+# If not empty, S3/R2 will be used for media storage
+AWS_S3_ACCESS_KEY_ID=
+AWS_S3_SECRET_ACCESS_KEY=
+AWS_STORAGE_BUCKET_NAME=
+# If using a custom domain for media storage, set the MEDIA_URL
+#  and AWS_S3_CUSTOM_DOMAIN
+AWS_S3_CUSTOM_DOMAIN=
+MEDIA_URL=/media/
+# The endpoint URL is necessary for Cloudflare R2
+AWS_S3_ENDPOINT_URL=

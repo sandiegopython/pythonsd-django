@@ -10,6 +10,8 @@ import pytz
 import requests
 from defusedxml import ElementTree
 
+from .models import Organizer
+
 
 CACHE_DURATION = 60 * 15  # 15 minutes
 log = logging.getLogger(__file__)
@@ -19,6 +21,17 @@ class HomePageView(TemplateView):
     """Displays the homepage."""
 
     template_name = "pythonsd/index.html"
+
+
+class OrganizersView(TemplateView):
+    """Displays SD Python organizers."""
+
+    template_name = "pythonsd/organizers.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["organizers"] = Organizer.objects.filter(active=True).order_by("name")
+        return context
 
 
 @method_decorator(cache_page(CACHE_DURATION), name="dispatch")

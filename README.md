@@ -42,13 +42,19 @@ you can build the container and run it locally:
 cp .env/local.sample .env/local
 
 # Build the docker image for sandiegopython.org
-docker buildx build -t sandiegopython.org .
+# Use Docker compose to have Redis and PostgreSQL just like in production
+# Note: Docker is used in production but Docker compose is just for development
+make dockerbuild
 
-# Start a development server on http://localhost:8000
-docker run --env-file=".env/local" --publish=8000:8000 sandiegopython.org
+# Start a development web server on http://localhost:8000
+# Use ctrl+C to stop
+make dockerserve
 
-# You can start a shell to the container with the following:
-docker run --env-file=".env/local" -it sandiegopython.org /bin/bash
+# While the server is running,
+# you can start a bash shell to the container with the following:
+# Once you have a bash shell, you can run migrations,
+# manually connect to the local Postgres database or anything else
+make dockershell
 ```
 
 

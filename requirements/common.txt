@@ -20,3 +20,6 @@ django-enforce-host==1.1.0
 
 # For parsing YouTube's XML feed
 defusedxml==0.7.1
+
+# Used for image field handling
+pillow==10.3.0
