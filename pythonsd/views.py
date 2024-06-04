@@ -1,4 +1,5 @@
 from datetime import datetime
+import zoneinfo
 import logging
 
 from django.conf import settings
@@ -6,7 +7,6 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 
-import pytz
 import requests
 from defusedxml import ElementTree
 
@@ -69,9 +69,10 @@ class UpcomingEventsView(TemplateView):
                     "link": e["link"],
                     "name": e["name"],
                     # Always show time in local San Diego time
-                    "datetime": datetime.utcfromtimestamp(e["time"] // 1000)
-                    .replace(tzinfo=pytz.utc)
-                    .astimezone(pytz.timezone(settings.TIME_ZONE)),
+                    "datetime": datetime.fromtimestamp(
+                        e["time"] // 1000,
+                        tz=zoneinfo.ZoneInfo(key=settings.TIME_ZONE),
+                    ),
                     "venue": e["venue"]["name"] if "venue" in e else None,
                 }
                 for e in resp.json()
@@ -132,7 +133,7 @@ class RecentVideosView(TemplateView):
                         # the stream was initialized in youtube, not when it was live
                         "datetime": datetime.fromisoformat(
                             entry.find("atom:updated", ns).text
-                        ).astimezone(pytz.timezone(settings.TIME_ZONE)),
+                        ).astimezone(zoneinfo.ZoneInfo(key=settings.TIME_ZONE)),
                     }
                 )
         else:

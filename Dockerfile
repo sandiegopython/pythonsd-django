@@ -40,7 +40,7 @@ COPY . /code/
 RUN --mount=type=cache,target=/root/.npm npm install
 RUN npm run build
 
-RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput --clear
 
 # Run the container unprivileged
 RUN addgroup www && useradd -g www www
@@ -54,4 +54,4 @@ RUN date -u +'%Y-%m-%dT%H:%M:%SZ' > BUILD_DATE
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "--log-file", "-", "config.wsgi"]
+CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "--log-file", "-", "--access-logfile", "-", "config.wsgi"]
