@@ -40,7 +40,7 @@ COPY . /code/
 RUN --mount=type=cache,target=/root/.npm npm install
 RUN npm run build
 
-RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput --clear
 
 # Run the container unprivileged
 RUN addgroup www && useradd -g www www
