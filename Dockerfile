@@ -54,4 +54,4 @@ RUN date -u +'%Y-%m-%dT%H:%M:%SZ' > BUILD_DATE
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "--log-file", "-", "config.wsgi"]
+CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "--log-file", "-", "--access-logfile", "-", "config.wsgi"]
