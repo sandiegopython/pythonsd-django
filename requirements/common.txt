@@ -1,10 +1,9 @@
 # Helper for transforming a database URL envvar
 # to a Django connection string
-dj-database-url==2.1.0
+dj-database-url==2.2.0
 
 # This is a Django app
-Django==3.2.25
-pytz==2022.7.1
+Django==4.2.13
 
 # A zero dependency WSGI server
 gunicorn==22.0.0
@@ -20,3 +19,6 @@ django-enforce-host==1.1.0
 
 # For parsing YouTube's XML feed
 defusedxml==0.7.1
+
+# Used for image field handling
+pillow==10.3.0

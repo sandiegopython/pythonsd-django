@@ -12,7 +12,7 @@ import dj_database_url
 from .base import *  # noqa
 
 
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 DEBUG = False
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -34,8 +34,24 @@ ALLOWED_HOSTS = [
 ADMIN_URL = os.environ.get("ADMIN_URL", "admin")
 
 
+# Django-storages
+# https://django-storages.readthedocs.io
+# --------------------------------------------------------------------------
+# Optionally store media files in S3/R2/etc.
+AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_S3_ACCESS_KEY_ID")
+AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_S3_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+# When using media storage with a custom domain
+# set this and set MEDIA_URL
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
+# The endpoint URL is necessary for Cloudflare R2
+AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL", default=None)
+if AWS_S3_ACCESS_KEY_ID and AWS_S3_SECRET_ACCESS_KEY and AWS_STORAGE_BUCKET_NAME:
+    STORAGES["default"]["BACKEND"] = "storages.backends.s3.S3Storage"
+
+
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # --------------------------------------------------------------------------
 DATABASES = {"default": dj_database_url.config()}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -43,7 +59,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = 600
 
 
 # Caching
-# https://docs.djangoproject.com/en/3.2/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.2/ref/settings/#caches
 # http://niwinz.github.io/django-redis/
 # --------------------------------------------------------------------------
 if "REDIS_URL" in os.environ:
@@ -60,7 +76,7 @@ if "REDIS_URL" in os.environ:
 
 
 # Security
-# https://docs.djangoproject.com/en/3.2/topics/security/
+# https://docs.djangoproject.com/en/4.2/topics/security/
 # --------------------------------------------------------------------------
 if "SECURE_SSL_HOST" in os.environ:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -83,14 +99,14 @@ ENFORCE_HOST = os.environ.get("ENFORCE_HOST", None)
 
 
 # Sessions
-# https://docs.djangoproject.com/en/3.2/topics/http/sessions/
+# https://docs.djangoproject.com/en/4.2/topics/http/sessions/
 # Don't put sessions in the database
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 
 # Email
-# https://docs.djangoproject.com/en/3.2/topics/email/
+# https://docs.djangoproject.com/en/4.2/topics/email/
 # https://anymail.readthedocs.io/en/stable/
 # --------------------------------------------------------------------------
 if "SENDGRID_API_KEY" in os.environ:
@@ -100,7 +116,7 @@ if "SENDGRID_API_KEY" in os.environ:
 
 
 # Logging
-# http://docs.djangoproject.com/en/3.2/topics/logging
+# http://docs.djangoproject.com/en/4.2/topics/logging
 # --------------------------------------------------------------------------
 LOGGING["loggers"][""]["level"] = "INFO"
 LOGGING["loggers"]["pythonsd"]["level"] = "INFO"

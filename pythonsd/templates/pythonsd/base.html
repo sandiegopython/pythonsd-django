@@ -35,11 +35,14 @@
               {% url 'code-of-conduct' as conduct_url %}
               <a class="text-slate-100 hover:border-b-2 hover:border-slate-500" href="{% if request.path != conduct_url %}{{ conduct_url }}{% else %}#{% endif %}">Code of Conduct</a>
             </li>
+            <li class="mr-5">
+              {% url 'organizers' as organizers_url %}
+              <a class="text-slate-100 hover:border-b-2 hover:border-slate-500" href="{% if request.path != organizers_url %}{{ organizers_url }}{% else %}#{% endif %}">Organizers</a>
+            </li>
           </ul>
         </div>
       </nav>
     </div>
-
 
     <main role="main">
       {% block main %}{% endblock main %}

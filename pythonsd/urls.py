@@ -23,6 +23,11 @@ urlpatterns = [
         generic.TemplateView.as_view(template_name="pythonsd/code-of-conduct.html"),
         name="code-of-conduct",
     ),
+    path(
+        r"organizers/",
+        views.OrganizersView.as_view(template_name="pythonsd/organizers.html"),
+        name="organizers",
+    ),
     # XHR/Async requests
     path(r"xhr/events/", views.UpcomingEventsView.as_view(), name="upcoming_events"),
     path(r"xhr/videos/", views.RecentVideosView.as_view(), name="recent_videos"),
