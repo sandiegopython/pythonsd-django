@@ -1,14 +1,12 @@
 {% for event in upcoming_events %}
-  <div class="media mb-3">
-    <div class="media-body">
-      <p class="m-0">
-        <a href="{{ event.link }}" rel="nofollow noopener noreferrer">{{ event.name }}</a>
-      </p>
-      <p class="m-0">
-        <span>{{ event.datetime|date:"N j, fa" }}</span>
-        {% if event.venue %}<br><span>{{ event.venue }}</span>{% endif %}
-      </p>
-    </div>
+  <div class="mb-3">
+    <p class="m-0">
+      <a href="{{ event.link }}" rel="nofollow noopener noreferrer">{{ event.name }}</a>
+    </p>
+    <p class="m-0">
+      <span>{{ event.datetime|date:"N j, fa" }}</span>
+      {% if event.venue %}<br><span>{{ event.venue }}</span>{% endif %}
+    </p>
   </div>
 {% empty %}
   <p>There are no upcoming events but join our <a href="https://www.meetup.com/pythonsd/" rel="nofollow noopener noreferrer">Meetup group</a> to get notified when we have one.</p>

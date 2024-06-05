@@ -11,9 +11,7 @@
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#allow
     {% endcomment %}
-    <div class="embed-responsive embed-responsive-16by9 w-75">
-      <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}?html5=1" title="YouTube video player" frameborder="0" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
+    <iframe class="w-full aspect-video" src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}?html5=1" title="YouTube video player" frameborder="0" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
 
   {% endwith %}
 {% else %}

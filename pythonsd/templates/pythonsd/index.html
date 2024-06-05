@@ -7,84 +7,81 @@
 
 {% block main %}
 
-  <div class="bg-[url('/static-files/img/saturday-group-background.jpg')] bg-cover bg-no-repeat bg-[50%]">
-    <div class="container mx-auto min-h-64 align-middle">
+  <div class="bg-[url('/static-files/img/saturday-group-background.jpg')] bg-cover bg-no-repeat bg-[50%] mb-6">
+    <div class="container mx-auto min-h-96 md:min-h-64 grid grid-cols-1 gap-2 md:gap-4 content-center">
       <h1 class="text-5xl font-bold">San Diego Python</h1>
-      <p class="lead">San Diego Python is a Python programming language special interest group with hundreds of active members and regular meetups. It is free to join and open to members of all skill levels whether you've mastered Python or are just starting to learn.</p>
+      <p class="text-lg">San Diego Python is a Python programming language special interest group with hundreds of active members and regular meetups. It is free to join and open to members of all skill levels whether you've mastered Python or are just starting to learn.</p>
     </div>
   </div>
 
   <div class="container mx-auto">
 
-    <section class="mb-3">
-      <div class="row">
-        <div class="col-lg-4">
-          <h2>About us</h2>
-          <p>San Diego Python is a group for those interested in learning about Python or connecting with other Python professionals. We have a smaller weekly meetup for people to work on Python projects and a larger monthly meetup on the 4th Thursday of the month with speakers and talks.</p>
-          <p>Join us on <a href="https://www.meetup.com/pythonsd/">Meetup</a> to stay up to date with our upcoming events!</p>
-        </div>
-
-        <div class="col-lg-4">
-          <h3 id="discord">Join us on Discord</h3>
-          <p>Meetup events aren't the only time for chatting. There's also a Discord server. Sign on to ask questions, give answers, or just hang out. San Diego Python's Discord server is available at <a href="https://discord.gg/8GpWuVvdbQ" rel="nofollow noopener noreferrer">https://discord.gg/8GpWuVvdbQ</a>. The #jobs channel in Discord is great place to promote a job posting at your company.</p>
-        </div>
-
-        <div class="col-lg-4">
-          <h3>Upcoming meetups</h3>
-          <div id="meetup-widget" hx-get="{% url 'upcoming_events' %}" hx-trigger="load">
-            <p class="small py-5">Loading...</p>
-          </div>
-          <p>Interested in giving a 5-7 minute lightning talk at the monthly meetup? <a href="http://pysd.io/talk" rel="nofollow noopener noreferrer">Please sign up!</a></p>
-        </div>
+    <section class="mb-3 grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div>
+        <h2>About us</h2>
+        <p>San Diego Python is a group for those interested in learning about Python or connecting with other Python professionals. We have a smaller weekly meetup for people to work on Python projects and a larger monthly meetup on the 4th Thursday of the month with speakers and talks.</p>
+        <p>Join us on <a href="https://www.meetup.com/pythonsd/">Meetup</a> to stay up to date with our upcoming events!</p>
       </div>
+
+      <div>
+        <h2 id="discord">Join us on Discord</h2>
+        <p>Meetup events aren't the only time for chatting. There's also a Discord server. Sign on to ask questions, give answers, or just hang out. San Diego Python's Discord server is available at <a href="https://discord.gg/8GpWuVvdbQ" rel="nofollow noopener noreferrer">https://discord.gg/8GpWuVvdbQ</a>. The #jobs channel in Discord is great place to promote a job posting at your company.</p>
+      </div>
+
+      <div>
+        <h2>Upcoming meetups</h2>
+        <div id="meetup-widget" hx-get="{% url 'upcoming_events' %}" hx-trigger="load">
+          <p class="small py-5">Loading...</p>
+        </div>
+        <p>Interested in giving a 5-7 minute lightning talk at the monthly meetup? <a href="http://pysd.io/talk" rel="nofollow noopener noreferrer">Please sign up!</a></p>
+      </div>
+
     </section>
 
     {# Sponsors #}
-    <section class="mb-3" id="sponsors">
-      <div class="row">
-        <div class="col-lg-6">
+    <section class="mb-3 grid grid-cols-1 gap-8 md:grid-cols-2">
 
-          <h3>Sponsors</h3>
-          <p>These fine companies help to make San Diego Python a success.</p>
+      <div id="sponsors">
 
-          <ul class="list-unstyled">
-            <li class="media">
-              <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="h-16 mr-3" alt="Qualcomm">
-              <div class="media-body">
-                <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
-                <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
-              </div>
-            </li>
+        <h2>Sponsors</h2>
+        <p>These fine companies help to make San Diego Python a success.</p>
 
-            <li class="media">
-              <img src="{% static 'img/sponsors/neo4j-logo.png' %}" class="h-16 mr-3" alt="Neo4j">
-              <div class="media-body">
-                <h5 class="mt-0 mb-1"><a href="https://neo4j.com/" rel="nofollow noopener noreferrer">Neo4j</a></h5>
-                <p class="m-0">Neo4j is providing food at our monthly meetup</p>
-              </div>
-            </li>
+        <figure class="flex items-center space-x-4">
+          <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="flex-none h-16" alt="Qualcomm">
+          <figcaption class="flex-auto">
+            <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
+            <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
+          </figcaption>
+        </figure>
 
-            <li class="media">
-              <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="h-16 mr-3" alt="JFrog">
-              <div class="media-body">
-                <h5 class="mt-0 mb-1"><a href="https://jfrog.com/" rel="nofollow noopener noreferrer">JFrog</a></h5>
-                <p class="m-0">JFrog sponsors our monthly meetups and provides giveaways!</p>
-              </div>
-            </li>
-          </ul>
+        <figure class="flex items-center space-x-4">
+          <img src="{% static 'img/sponsors/neo4j-logo.png' %}" class="flex-none h-16" alt="Neo4j">
+          <figcaption class="flex-auto">
+            <h5 class="mt-0 mb-1"><a href="https://neo4j.com/" rel="nofollow noopener noreferrer">Neo4j</a></h5>
+            <p class="m-0">Neo4j is providing food at our monthly meetup</p>
+          </figcaption>
+        </figure>
 
-          <p class="small">You can <a href="https://psfmember.org/civicrm/contribute/transact/?reset=1&id=9">donate to San Diego Python</a> through the PSF. Your donation may be tax deductible. All donations go toward events, workshops, and training materials.</p>
+        <figure class="flex items-center space-x-4">
+          <img src="{% static 'img/sponsors/jfrog-logo.png' %}" class="flex-none h-16" alt="JFrog">
+          <figcaption class="flex-auto">
+            <h5 class="mt-0 mb-1"><a href="https://jfrog.com/" rel="nofollow noopener noreferrer">JFrog</a></h5>
+            <p class="m-0">JFrog sponsors our monthly meetups and provides giveaways!</p>
+          </figcaption>
+        </figure>
 
-        </div> <!-- /col -->
+        <p class="text-sm">You can <a href="https://psfmember.org/civicrm/contribute/transact/?reset=1&id=9">donate to San Diego Python</a> through the PSF. Your donation may be tax deductible. All donations go toward events, workshops, and training materials.</p>
 
-        <div class="col-lg-6">
-          <h3>Latest video</h3>
+      </div>
 
-          <div id="youtube-widget" hx-get="{% url 'recent_videos' %}" hx-trigger="load">
-            <p class="small py-5">Loading...</p>
-          </div>
+      <div>
+        <h2>Latest video</h2>
+
+        <div id="youtube-widget" hx-get="{% url 'recent_videos' %}" hx-trigger="load">
+          <p class="text-sm py-5">Loading...</p>
         </div>
       </div>
+
     </section>
 
   </div> <!-- /container -->

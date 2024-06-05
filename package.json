@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/pythonsd/pythonsd-django#readme",
   "dependencies": {
-    "htmx.org": "^1.9.12"
+    "htmx.org": "^1.9.12",
+    "hyperscript.org": "^0.9.12"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.3"

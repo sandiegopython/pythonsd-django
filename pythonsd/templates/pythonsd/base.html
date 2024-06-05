@@ -10,7 +10,6 @@
 
     <title>{% block title %}Home{% endblock title %} · San Diego Python</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="{% static 'main.css' %}" rel="stylesheet">
 
     <!-- Favicons -->
@@ -22,27 +21,34 @@
   </head>
 
   <body>
-    <div class="bg-slate-700">
+    <header class="bg-slate-700">
       <nav class="container flex flex-wrap justify-between items-center py-6">
         {% url 'index' as index_url %}
         <a href="{% if request.path != index_url %}{{ index_url }}{% else %}#{% endif %}">
           <img class="max-h-12" src="{% static 'img/sandiegopython-logo.svg' %}" alt="San Diego Python Home">
         </a>
 
-        <div>
-          <ul class="flex items-center font-extrabold">
-            <li class="mr-5">
+        <!-- Navigation menu toggle -->
+        <div id="navigation-toggle" class="h-6 w-6 cursor-pointer md:hidden block text-slate-100" _="on click toggle .hidden on #navigation-menu">
+          <svg xmlns="http://www.w3.org/2000/svg" id="menu-button" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </div>
+
+        <div id="navigation-menu" class="hidden w-full mt-4 md:w-auto md:flex md:items-center md:mt-0">
+          <ul class="md:flex md:justify-between font-extrabold mb-0">
+            <li class="py-2 md:mr-5">
               {% url 'code-of-conduct' as conduct_url %}
-              <a class="text-slate-100 hover:border-b-2 hover:border-slate-500" href="{% if request.path != conduct_url %}{{ conduct_url }}{% else %}#{% endif %}">Code of Conduct</a>
+              <a class="text-slate-100 hover:text-slate-300" href="{% if request.path != conduct_url %}{{ conduct_url }}{% else %}#{% endif %}">Code of Conduct</a>
             </li>
-            <li class="mr-5">
+            <li class="py-2 md:mr-5">
               {% url 'organizers' as organizers_url %}
-              <a class="text-slate-100 hover:border-b-2 hover:border-slate-500" href="{% if request.path != organizers_url %}{{ organizers_url }}{% else %}#{% endif %}">Organizers</a>
+              <a class="text-slate-100 hover:text-slate-300" href="{% if request.path != organizers_url %}{{ organizers_url }}{% else %}#{% endif %}">Organizers</a>
             </li>
           </ul>
         </div>
       </nav>
-    </div>
+    </header>
 
     <main role="main">
       {% block main %}{% endblock main %}
@@ -52,10 +58,10 @@
     <footer class="container mx-auto">
       <hr>
 
-      <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-sm mb-4">
-        <p class="mb-0">&copy; {% now "Y" %} San Diego Python &amp; Contributors</p>
-        <p class="mb-0 text-left lg:text-center">Edit this site on <a href="https://github.com/sandiegopython/pythonsd-django/" rel="nofollow noopener noreferrer">GitHub</a></p>
-        <p class="mb-0text-left lg:text-right">v{{ APP_VERSION }}{% if APP_REVISION %} (<a href="https://github.com/sandiegopython/pythonsd-django/commit/{{ APP_REVISION }}">{{ APP_REVISION }}</a>){% endif %}</p>
+      <div class="grid grid-cols-1 md:gap-4 md:grid-cols-3 mb-8">
+        <p class="text-sm mb-1">&copy; {% now "Y" %} San Diego Python &amp; Contributors</p>
+        <p class="text-sm mb-1 md:text-center">Edit this site on <a href="https://github.com/sandiegopython/pythonsd-django/" rel="nofollow noopener noreferrer">GitHub</a></p>
+        <p class="text-sm mb-1 md:text-right">v{{ APP_VERSION }}{% if APP_REVISION %} (<a href="https://github.com/sandiegopython/pythonsd-django/commit/{{ APP_REVISION }}">{{ APP_REVISION }}</a>){% endif %}</p>
       </div>
 
       <div class="flex justify-center space-x-4 lg:space-x-16 my-4">
@@ -101,6 +107,7 @@
     </footer>
 
     <script src="{% static 'htmx.min.js' %}"></script>
+    <script src="{% static '_hyperscript.min.js' %}"></script>
 
   </body>
 </html>
