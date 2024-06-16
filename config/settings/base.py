@@ -111,7 +111,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "pythonsd", "static"),
     # Only available after running `npm install`
     os.path.join(BASE_DIR, "node_modules/htmx.org/dist"),
-    os.path.join(BASE_DIR, "node_modules/hyperscript.org/dist"),
 ]
 
 STORAGES = {
