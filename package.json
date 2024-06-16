@@ -1,8 +1,7 @@
 {
   "name": "pythonsd-django",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.2.0",
+  "description": "San Diego Python Website - sandiegopython.org",
   "scripts": {
     "dist": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --minify",
     "build": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css",
@@ -10,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pythonsd/pythonsd-django.git"
+    "url": "git+https://github.com/sandiegopython/pythonsd-django.git"
   },
   "engines": {
     "npm": ">=10.0.0 <11.0.0",
@@ -19,9 +18,9 @@
   "author": "San Diego Python & Contributors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pythonsd/pythonsd-django/issues"
+    "url": "https://github.com/sandiegopython/pythonsd-django/issues"
   },
-  "homepage": "https://github.com/pythonsd/pythonsd-django#readme",
+  "homepage": "https://github.com/sandiegopython/pythonsd-django#readme",
   "dependencies": {
     "htmx.org": "^1.9.12",
     "hyperscript.org": "^0.9.12"
