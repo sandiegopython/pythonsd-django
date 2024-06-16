@@ -3,9 +3,9 @@
   "version": "0.2.0",
   "description": "San Diego Python Website - sandiegopython.org",
   "scripts": {
-    "dist": "cp ./assets/src/main.js ./assets/dist/ && tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --minify",
-    "build": "cp ./assets/src/main.js ./assets/dist/ && tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css",
-    "watch": "cp ./assets/src/main.js ./assets/dist/ && tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --watch"
+    "dist": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --minify",
+    "build": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css",
+    "watch": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --watch"
   },
   "repository": {
     "type": "git",
