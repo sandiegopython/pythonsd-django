@@ -16,8 +16,8 @@ This is the repository for the San Diego Python website at [sandiegopython.org](
 
 ```shell
 pip install -r requirements/local.txt  # Install local Python requirements
-npm install                            # Install node dependencies for CSS/JS compiling
-npm run build                          # Build CSS/JS
+npm install                            # Install JS dependencies for frontend CSS/JS
+npm run build                          # Build CSS (continuously with `npm run watch`)
 pre-commit install                     # Setup code standard pre-commit hook
 ./manage.py migrate                    # Create a local development database
 ./manage.py createsuperuser            # Create a local development administrator user

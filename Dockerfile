@@ -38,7 +38,7 @@ COPY . /code/
 
 # Build JS/static assets
 RUN --mount=type=cache,target=/root/.npm npm install
-RUN npm run build
+RUN npm run dist
 
 RUN python manage.py collectstatic --noinput --clear
 

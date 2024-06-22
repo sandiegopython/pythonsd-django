@@ -109,6 +109,8 @@ STATIC_URL = "/static-files/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "assets", "dist"),
     os.path.join(BASE_DIR, "pythonsd", "static"),
+    # Only available after running `npm install`
+    os.path.join(BASE_DIR, "node_modules/htmx.org/dist"),
 ]
 
 STORAGES = {
@@ -172,13 +174,11 @@ LOGGING = {
         "console-verbose": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "filters": ["require_debug_true"],
             "formatter": "verbose",
         },
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "filters": ["require_debug_true"],
             "formatter": "succinct",
         },
         "django.server": {

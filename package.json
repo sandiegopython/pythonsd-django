@@ -1,41 +1,30 @@
 {
   "name": "pythonsd-django",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.2.0",
+  "description": "San Diego Python Website - sandiegopython.org",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode=production --progress",
-    "watch": "webpack --config webpack.config.js --mode=development --watch"
+    "dist": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --minify",
+    "build": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css",
+    "watch": "tailwindcss -i ./assets/src/input.css -o ./assets/dist/main.css --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pythonsd/pythonsd-django.git"
+    "url": "git+https://github.com/sandiegopython/pythonsd-django.git"
   },
   "engines": {
-    "npm" : ">=10.0.0 <11.0.0",
+    "npm": ">=10.0.0 <11.0.0",
     "node": ">=20.0.0 <21.0.0"
   },
   "author": "San Diego Python & Contributors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pythonsd/pythonsd-django/issues"
+    "url": "https://github.com/sandiegopython/pythonsd-django/issues"
   },
-  "homepage": "https://github.com/pythonsd/pythonsd-django#readme",
+  "homepage": "https://github.com/sandiegopython/pythonsd-django#readme",
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "htmx.org": "^1.8.5",
-    "jquery": "^3.6.0",
-    "popper.js": "^1.14.3"
+    "htmx.org": "^1.9.12"
   },
   "devDependencies": {
-    "css-loader": "^6.7.1",
-    "css-minimizer-webpack-plugin": "^4.0.0",
-    "mini-css-extract-plugin": "^2.6.1",
-    "sass": "^1.53.0",
-    "sass-loader": "^13.0.2",
-    "style-loader": "^3.3.1",
-    "terser-webpack-plugin": "^5.3.3",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^4.10.0"
+    "tailwindcss": "^3.4.3"
   }
 }
