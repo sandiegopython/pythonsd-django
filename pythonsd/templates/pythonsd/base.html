@@ -22,7 +22,7 @@
 
   <body>
     <header class="bg-slate-700">
-      <nav class="container flex flex-wrap justify-between items-center py-6">
+      <nav class="container flex flex-wrap justify-between items-center py-6" hx-boost="true">
         {% url 'index' as index_url %}
         <a href="{% if request.path != index_url %}{{ index_url }}{% else %}#{% endif %}">
           <img class="max-h-12" src="{% static 'img/sandiegopython-logo.svg' %}" alt="San Diego Python Home">
