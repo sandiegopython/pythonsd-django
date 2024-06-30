@@ -32,9 +32,10 @@ dockerserve:
 	docker compose -f $(DOCKER_CONFIG) up
 
 # Use this command to inspect the container, run management commands,
-# or run anything else on the Django container
+# or run anything else on the Django container. It does expect the
+# container to already be running
 dockershell:
-	docker compose -f $(DOCKER_CONFIG) run --rm django /bin/bash
+	docker compose -f $(DOCKER_CONFIG) exec django /bin/bash
 
 # Build and deploy the production container
 deploy:
