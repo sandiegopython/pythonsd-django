@@ -11,7 +11,7 @@ django_coverage_plugin==3.1.0
 # Used in local testing
 WebTest==3.0.0
 beautifulsoup4==4.12.3
-WebOb==1.8.7
+WebOb==1.8.8
 responses==0.25.0
 
 # Used to help with Django related debugging
