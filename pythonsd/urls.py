@@ -70,7 +70,10 @@ redirects = [
     # URL shortcuts for popular external links
     path(
         r"discord/",
-        generic.RedirectView.as_view(url="https://discord.gg/8GpWuVvdbQ", permanent=False),
+        generic.RedirectView.as_view(
+            url="https://discord.gg/8GpWuVvdbQ",
+            permanent=False,
+        ),
     ),
     path(
         r"youtube/",
