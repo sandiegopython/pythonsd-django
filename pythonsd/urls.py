@@ -67,6 +67,21 @@ redirects = [
         r"pages/job-posting-guidelines.html",
         generic.RedirectView.as_view(url="/", permanent=False),
     ),
+    # URL shortcuts for popular external links
+    path(
+        r"discord/",
+        generic.RedirectView.as_view(
+            url="https://discord.gg/8GpWuVvdbQ",
+            permanent=False,
+        ),
+    ),
+    path(
+        r"youtube/",
+        generic.RedirectView.as_view(
+            url="https://www.youtube.com/@sandiegopython/streams",
+            permanent=False,
+        ),
+    ),
 ]
 
 urlpatterns += redirects
