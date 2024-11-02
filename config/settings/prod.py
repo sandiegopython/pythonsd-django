@@ -58,23 +58,6 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = 600
 
 
-# Caching
-# https://docs.djangoproject.com/en/4.2/ref/settings/#caches
-# http://niwinz.github.io/django-redis/
-# --------------------------------------------------------------------------
-if "REDIS_URL" in os.environ:
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": os.environ["REDIS_URL"],
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                "IGNORE_EXCEPTIONS": True,
-            },
-        }
-    }
-
-
 # Security
 # https://docs.djangoproject.com/en/4.2/topics/security/
 # --------------------------------------------------------------------------
