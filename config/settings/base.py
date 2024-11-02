@@ -134,6 +134,16 @@ DEFAULT_FROM_EMAIL = "noreply@sandiegopython.org"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 
+# Caching
+# https://docs.djangoproject.com/en/4.2/ref/settings/#caches
+# --------------------------------------------------------------------------
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+
+
 # Logging
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

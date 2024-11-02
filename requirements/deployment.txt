@@ -3,9 +3,6 @@
 # Database server
 psycopg2-binary==2.9.9
 
-# Caching
-django-redis==5.4.0
-
 # Email
 django-anymail==10.3
 
