@@ -2,8 +2,6 @@
 
 This is the repository for the San Diego Python website at [sandiegopython.org](https://sandiegopython.org).
 
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/184l9lc8y7av2fah?svg=true)](https://ci.appveyor.com/project/davidfischer/pythonsd-django)
-
 
 ## Developing
 
