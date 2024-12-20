@@ -1,7 +1,0 @@
-install:
-  - "SET PATH=C:\\Python37;C:\\Python37\\Scripts;C:\\Program Files\\PostgreSQL\\9.4\\bin;%PATH%"
-  - "pip install --requirement requirements/local.txt"
-
-build: off
-
-test_script: coverage run manage.py test
