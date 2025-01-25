@@ -14,7 +14,7 @@
 {% if organizers %}
 <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-12 mb-16 ">
   {% for organizer in organizers %}
-    <div class="flex flex-col rounded border border-slate-200 max-w-64 md:max-w-80 mx-auto">
+    <div class="flex flex-col rounded-sm border border-slate-200 max-w-64 md:max-w-80 mx-auto">
       <img src="{{ organizer.photo.url }}" class="flex-none aspect-square object-cover" alt="{{ organizer.name }}">
       <div class="p-4">
         <h3>{{ organizer.name }}</h3>
