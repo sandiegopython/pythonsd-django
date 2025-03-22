@@ -6,7 +6,7 @@ dj-database-url==2.2.0
 Django==4.2.20
 
 # A zero dependency WSGI server
-gunicorn==22.0.0
+gunicorn==23.0.0
 
 # For connecting to various APIs (eg. Meetup.com)
 requests==2.32.0
