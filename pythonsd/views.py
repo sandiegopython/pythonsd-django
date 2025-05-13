@@ -38,7 +38,11 @@ class OrganizersView(TemplateView):
 class UpcomingEventsView(TemplateView):
     """Get upcoming events from Meetup."""
 
-    MEETUP_EVENT_API_URL = "https://api.meetup.com/pythonsd/events"
+    # https://www.meetup.com/api/guide/
+    MEETUP_EVENT_API_URL = "https://api.meetup.com/gql-ext"
+
+    # https://www.meetup.com/pythonsd/
+    MEETUP_GROUP_SLUG = "pythonsd"
 
     template_name = "pythonsd/fragments/upcoming-events.html"
 
@@ -51,11 +55,33 @@ class UpcomingEventsView(TemplateView):
         """Get upcoming events from Meetup."""
         log.debug("Requesting upcoming events from Meetup.com")
 
-        # https://www.meetup.com/meetup_api/docs/:urlname/events/
+        # Fetch the next 3 events from the API
+        # https://www.meetup.com/api/schema/#Group
+        # https://www.meetup.com/api/guide/#p02-querying-section
+        body = """
+          query($urlname: String!) {
+            groupByUrlname(urlname: $urlname) {
+              events(first: 3) {
+                edges {
+                  node {
+                    id
+                    title
+                    venues {
+                      name
+                    }
+                    eventUrl
+                    dateTime
+                  }
+                }
+              }
+            }
+          }
+        """
+
         try:
-            resp = requests.get(
-                self.MEETUP_EVENT_API_URL,
-                params={"photo-host": "public", "page": "3"},
+            resp = requests.post(
+                url=self.MEETUP_EVENT_API_URL,
+                json={"query": body, "variables": {"urlname": self.MEETUP_GROUP_SLUG}},
                 timeout=5,
             )
         except Exception:
@@ -63,23 +89,37 @@ class UpcomingEventsView(TemplateView):
             return []
 
         if resp.ok:
+            data = resp.json()
+
+            if "errors" in data:
+                log.error("GraphQL error fetching Meetup event feed: %s", data)
+                return []
+
             # Transform from meetup's API format into our format
-            events = [
-                {
-                    "link": e["link"],
-                    "name": e["name"],
-                    # Always show time in local San Diego time
-                    "datetime": datetime.fromtimestamp(
-                        e["time"] // 1000,
-                        tz=zoneinfo.ZoneInfo(key=settings.TIME_ZONE),
-                    ),
-                    "venue": e["venue"]["name"] if "venue" in e else None,
-                }
-                for e in resp.json()
-            ]
+            events = []
+            for edge in resp.json()["data"]["groupByUrlname"]["events"]["edges"]:
+                event = edge["node"]
+                events.append(
+                    {
+                        "id": event["id"],
+                        "name": event["title"],
+                        "link": event["eventUrl"],
+                        # Meetup's API seems to return in our timezone
+                        # but we'll be explicit here for future-proofing
+                        "datetime": datetime.fromisoformat(
+                            event["dateTime"]
+                        ).astimezone(zoneinfo.ZoneInfo(key=settings.TIME_ZONE)),
+                        # Technically an event can have multiple or no venue (it's an array)
+                        "venue": (
+                            event["venues"][0]["name"] if event["venues"] else None
+                        ),
+                    }
+                )
             return events
         else:
-            log.error("Error fetching Meetup event feed")
+            log.error(
+                "Error fetching Meetup event feed (status code=%s)", resp.status_code
+            )
 
         return []
 
