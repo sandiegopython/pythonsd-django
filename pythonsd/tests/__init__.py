@@ -95,21 +95,24 @@ class TestMeetupEventsView(test.TestCase):
 
         self.expected_events = [
             {
-                "link": "https://www.meetup.com/pythonsd/events/fdzbnqyznbqb/",
-                "name": "Saturday Study Group",
-                "datetime": "2019-10-12T12:00:00-07:00",
-                "venue": "UCSD Geisel Library",
+                "id": "305930677",
+                "link": "https://www.meetup.com/pythonsd/events/305930677/",
+                "name": "SDPy Monthly Meetup",
+                "datetime": "2025-05-22T19:00:00-07:00",
+                "venue": "Qualcomm Building Q",
             },
             {
-                "link": "https://www.meetup.com/pythonsd/events/fdzbnqyznbzb/",
-                "name": "Saturday Study Group",
-                "datetime": "2019-10-19T12:00:00-07:00",
-                "venue": "UCSD Geisel Library",
+                "id": "305930676",
+                "link": "https://www.meetup.com/pythonsd/events/305930676/",
+                "name": "SDPy Monthly Meetup",
+                "datetime": "2025-06-26T19:00:00-07:00",
+                "venue": "Qualcomm Building Q",
             },
             {
-                "link": "https://www.meetup.com/pythonsd/events/zgtnxqyznbgc/",
-                "name": "Monthly Meetup",
-                "datetime": "2019-10-24T19:00:00-07:00",
+                "id": "305930675",
+                "link": "https://www.meetup.com/pythonsd/events/305930675/",
+                "name": "SDPy Monthly Meetup",
+                "datetime": "2025-07-24T19:00:00-07:00",
                 "venue": "Qualcomm Building Q",
             },
         ]
@@ -131,29 +134,40 @@ class TestMeetupEventsView(test.TestCase):
             return_value=self.expected_events,
         ) as mock_get:
             response = self.client.get(self.url)
-            self.assertContains(response, "UCSD Geisel Library")
             self.assertContains(response, "Qualcomm Building Q")
+            self.assertContains(response, "SDPy Monthly Meetup")
 
     @responses.activate
     def test_html_widget(self):
         responses.add(
-            responses.GET,
+            responses.POST,
             UpcomingEventsView.MEETUP_EVENT_API_URL,
             json=self.api_response,
             status=200,
         )
 
         response = self.client.get(self.url)
-        self.assertContains(response, "UCSD Geisel Library")
         self.assertContains(response, "Qualcomm Building Q")
+        self.assertContains(response, "SDPy Monthly Meetup")
 
     @responses.activate
     def test_api_noevents(self):
         responses.add(
-            responses.GET,
+            responses.POST,
             UpcomingEventsView.MEETUP_EVENT_API_URL,
-            json=[],
+            json={"data": {"groupByUrlname": {"events": {"edges": []}}}},
             status=400,
+        )
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "There are no upcoming events")
+
+    @responses.activate
+    def test_api_exception(self):
+        responses.add(
+            responses.POST,
+            UpcomingEventsView.MEETUP_EVENT_API_URL,
+            body=Exception("Error connecting..."),
         )
 
         response = self.client.get(self.url)
@@ -162,9 +176,9 @@ class TestMeetupEventsView(test.TestCase):
     @responses.activate
     def test_api_error(self):
         responses.add(
-            responses.GET,
+            responses.POST,
             UpcomingEventsView.MEETUP_EVENT_API_URL,
-            body=Exception("Error connecting..."),
+            json={"errors": ["There was some error querying meetup.com"]},
         )
 
         response = self.client.get(self.url)
