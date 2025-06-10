@@ -9,7 +9,7 @@ Django==4.2.22
 gunicorn==23.0.0
 
 # For connecting to various APIs (eg. Meetup.com)
-requests==2.32.0
+requests==2.32.4
 
 # For serving static assets from the WSGI server
 whitenoise==6.5.0
