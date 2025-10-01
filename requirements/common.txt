@@ -21,4 +21,4 @@ django-enforce-host==1.1.0
 defusedxml==0.7.1
 
 # Used for image field handling
-pillow==10.3.0
+pillow==11.3.0

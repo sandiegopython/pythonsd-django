@@ -1,7 +1,8 @@
 -r common.txt
 
 # Database server
-psycopg2-binary==2.9.9
+# https://www.psycopg.org/docs/install.html#install-from-source
+psycopg2==2.9.10
 
 # Email
 django-anymail==10.3
