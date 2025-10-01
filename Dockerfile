@@ -1,4 +1,6 @@
-ARG PYTHON_VERSION=3.10-slim-buster
+# https://www.debian.org/releases/stable/
+# https://hub.docker.com/_/python/
+ARG PYTHON_VERSION=3.13-slim-bookworm
 
 FROM python:${PYTHON_VERSION}
 
@@ -20,7 +22,7 @@ RUN apt-get install -y --no-install-recommends \
     make \
     build-essential \
     g++ \
-    postgresql-client \
+    postgresql-client libpq-dev \
     git
 
 RUN mkdir -p /code
