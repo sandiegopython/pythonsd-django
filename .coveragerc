@@ -1,5 +1,10 @@
 [run]
-branch: True
+branch = True
+# Currently, Python3.14 defaults to sysmon which is incompatible with coverage plugins
+# https://coverage.readthedocs.io/en/7.11.0/config.html#run-core
+# https://github.com/nedbat/coveragepy/issues/1790
+# https://github.com/nedbat/django_coverage_plugin/issues/102
+core = ctrace
 source =
   config
   pythonsd
