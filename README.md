@@ -7,7 +7,7 @@ This is the repository for the San Diego Python website at [sandiegopython.org](
 
 ### Prerequisites
 
-* Python v3.10
+* Python v3.14
 * Node v20
 
 ### Getting started

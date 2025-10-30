@@ -1,6 +1,6 @@
 # https://www.debian.org/releases/stable/
 # https://hub.docker.com/_/python/
-ARG PYTHON_VERSION=3.13-slim-bookworm
+ARG PYTHON_VERSION=3.14-slim-trixie
 
 FROM python:${PYTHON_VERSION}
 
