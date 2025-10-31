@@ -10,8 +10,18 @@
     See:
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#allow
+    * https://developers.google.com/youtube/iframe_api_reference
     {% endcomment %}
-    <iframe class="w-full aspect-video" src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}?html5=1" title="YouTube video player" frameborder="0" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe
+      class="aspect-video w-full rounded-lg"
+      src="https://www.youtube-nocookie.com/embed/{{ most_recent_video.id }}?html5=1"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"
+      allowfullscreen
+    ></iframe>
 
   {% endwith %}
 {% else %}
