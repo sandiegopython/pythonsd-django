@@ -3,7 +3,7 @@
 dj-database-url==3.0.1
 
 # This is a Django app
-Django==5.2.7
+Django==5.2.8
 
 # A zero dependency WSGI server
 gunicorn==23.0.0
