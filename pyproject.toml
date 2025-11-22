@@ -99,7 +99,6 @@ lines-after-imports = 2
 [tool.tox]
 # https://tox.wiki/en/latest/config.html#pyproject-toml-native
 env_list = ["coverage", "styles", "migrations"]
-setenv = { DJANGO_SETTINGS_MODULE = "config.settings.test", DJANGO_SETTINGS_SKIP_LOCAL = "True" }
 
 [tool.tox.env_run_base]
 description = "Run the full test suite under {base_python}"
@@ -112,7 +111,7 @@ extras = [
 [tool.tox.env.coverage]
 description = "Run full unit test suite with coverage"
 commands = [
-    ["uv", "run", "coverage", "run", "manage.py", "test"],
+    ["uv", "run", "coverage", "run", "manage.py", "test", "-v2", "--settings", "config.settings.test"],
     ["uv", "run", "coverage", "html"],
     ["uv", "run", "coverage", "report", "--show-missing", "--fail-under=100"],
 ]
