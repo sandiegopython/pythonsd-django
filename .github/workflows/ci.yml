@@ -33,4 +33,4 @@ jobs:
 
       - name: Run CI
         run: |
-          uv run tox
+          tox

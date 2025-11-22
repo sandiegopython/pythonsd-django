@@ -47,9 +47,6 @@ dev = [
 
   # Used to help with Django related debugging
   "django-debug-toolbar",
-
-  # Used to run the test suite
-  "tox",
 ]
 
 # Production dependencies
