@@ -21,7 +21,6 @@ STORAGES = {
 }
 
 # Disable logging during tests to keep the output clean
-# https://docs.djangoproject.com/en/5.2/topics/logging/
 for logger in LOGGING["loggers"].values():
     logger["handlers"] = ["null"]
     logger["level"] = "CRITICAL"
