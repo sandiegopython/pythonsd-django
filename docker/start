@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+# Launch gunicorn - the production web server
+# https://docs.gunicorn.org/en/stable/settings.html
+uv run gunicorn \
+    --timeout 15 \
+    --bind :8000 \
+    --workers 2 \
+    --max-requests 10000 \
+    --max-requests-jitter 100 \
+    --log-file - \
+    --access-logfile - \
+    config.wsgi

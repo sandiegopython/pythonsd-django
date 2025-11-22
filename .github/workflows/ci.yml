@@ -11,16 +11,26 @@ on:
 jobs:
   build:
 
-    name: Unit tests and code checks
+    name: Unit tests and code style checks
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v5
+
+      # https://docs.astral.sh/uv/guides/integration/github/
+      - uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.14"
+          enable-cache: true
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install dependencies
+        run: |
+          uv sync --frozen --extra dev
+          uv tool install tox --with tox-uv
 
       - name: Run CI
         run: |
-          pip install "tox>=4.0,<5.0"
-          tox
+          uv run tox

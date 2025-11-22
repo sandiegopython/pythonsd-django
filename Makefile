@@ -35,7 +35,7 @@ dockerserve:
 # or run anything else on the Django container. It does expect the
 # container to already be running
 dockershell:
-	docker compose -f $(DOCKER_CONFIG) exec django /bin/bash
+	docker compose -f $(DOCKER_CONFIG) run --rm django /shell
 
 # Build and deploy the production container
 deploy:

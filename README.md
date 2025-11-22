@@ -7,19 +7,28 @@ This is the repository for the San Diego Python website at [sandiegopython.org](
 
 ### Prerequisites
 
-* Python v3.14
+* [uv](https://docs.astral.sh) (see [uv installation](https://docs.astral.sh/uv/getting-started/installation/))
 * Node v20
+
 
 ### Getting started
 
+Install Python 3.14 with uv:
+
 ```shell
-pip install -r requirements/local.txt  # Install local Python requirements
-npm install                            # Install JS dependencies for frontend CSS/JS
-npm run build                          # Build CSS (continuously with `npm run watch`)
-pre-commit install                     # Setup code standard pre-commit hook
-./manage.py migrate                    # Create a local development database
-./manage.py createsuperuser            # Create a local development administrator user
-./manage.py runserver                  # Starts a local development server at http://localhost:8000
+uv python install
+```
+
+Install dependencies and dev setup
+
+```shell
+uv sync --all-extras                    # Install local Python requirements
+npm install                             # Install JS dependencies for frontend CSS/JS
+npm run build                           # Build CSS (continuously with `npm run watch`)
+uv run pre-commit install               # Setup code standard pre-commit hook
+uv run ./manage.py migrate              # Create a local development database
+uv run ./manage.py createsuperuser      # Create a local development administrator user
+uv run ./manage.py runserver            # Starts a local development server at http://localhost:8000
 ```
 
 
@@ -28,6 +37,7 @@ pre-commit install                     # Setup code standard pre-commit hook
 The entire test suite can be run with tox:
 
 ```shell
+uv tool install tox --with tox-uv       # Install tox-uv (only needs to be run once ever)
 tox
 ```
 

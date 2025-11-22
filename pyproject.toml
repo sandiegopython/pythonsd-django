@@ -1,21 +1,129 @@
-# https://black.readthedocs.io/
-[tool.black]
+[project]
+name = "pythonsd-django"
+version = "0.2.0"
+description = "San Diego Python website - sandiegopython.org"
+requires-python = ">=3.14, <3.15"
+dependencies = [
+  # This is a Django app
+  "Django >= 5.2, < 5.3",
+
+  # A zero dependency WSGI server
+  "gunicorn",
+
+  # For connecting to various APIs (eg. Meetup.com, YouTube)
+  "requests",
+
+  # For serving static assets from the WSGI server
+  "whitenoise",
+
+  # Redirects requests to other hosts to this one
+  "django-enforce-host",
+
+  # For parsing YouTube's XML feed
+  # DefusedXML is necessary to parse untrusted XML safely
+  "defusedxml",
+
+  # Used for image field handling
+  "pillow",
+
+  "dj-database-url",
+]
+
+[project.optional-dependencies]
+# Development dependencies
+dev = [
+  # Used for code formatting and linting
+  "pre-commit",
+
+  # Used for code coverage
+  "coverage",
+  "django_coverage_plugin",
+
+  # Used in local testing
+  "WebTest",
+  "beautifulsoup4",
+  "WebOb==1.8.9",
+  "responses",
+
+  # Used to help with Django related debugging
+  "django-debug-toolbar",
+
+  # Used to run the test suite
+  "tox",
+]
+
+# Production dependencies
+production = [
+  # Database server
+  # https://www.psycopg.org/docs/install.html#install-from-source
+  "psycopg[binary]",
+
+  # Email
+  "django-anymail",
+
+  # Cloud storage for media storage (S3, R2, etc.)
+  "django-storages[s3]",
+]
+
+
+# https://docs.astral.sh/ruff/configuration/
+[tool.ruff]
+exclude = [
+  "manage.py",
+  "docs",
+]
+
+# Same as Black.
 line-length = 88
-target_version = ['py310']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | venv
-  | _build
-  | buck-out
-  | build
-  | dist
-  | node_modules
-  | migrations
-)/
-'''
+indent-width = 4
+
+# Assume Python 3.14
+target-version = "py314"
+
+[tool.ruff.lint]
+# Enable:
+#  Pyflakes (`F`)
+#  pycodestyle (`E`) error codes.
+#  isort (`I`) import sorting
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.isort]
+# https://docs.astral.sh/ruff/settings/#lintisort
+force-single-line = true
+case-sensitive = false
+lines-after-imports = 2
+
+# Ignore `F405` (import *) in config files
+[tool.ruff.lint.per-file-ignores]
+"config/settings/*" = ["F405"]
+
+
+# Run all tests with `tox`
+[tool.tox]
+# https://tox.wiki/en/latest/config.html#pyproject-toml-native
+env_list = ["coverage", "styles", "migrations"]
+setenv = { DJANGO_SETTINGS_MODULE = "config.settings.test", DJANGO_SETTINGS_SKIP_LOCAL = "True" }
+
+[tool.tox.env_run_base]
+description = "Run the full test suite under {base_python}"
+runner = "uv-venv-lock-runner"
+base_python = ["python3.14"]
+extras = [
+    "dev",
+]
+
+[tool.tox.env.coverage]
+description = "Run full unit test suite with coverage"
+commands = [
+    ["uv", "run", "coverage", "run", "manage.py", "test"],
+    ["uv", "run", "coverage", "html"],
+    ["uv", "run", "coverage", "report", "--show-missing", "--fail-under=100"],
+]
+
+[tool.tox.env.styles]
+description = "Run type check on code base"
+commands = [["uv", "run", "pre-commit", "run", "--all-files"]]
+
+[tool.tox.env.migrations]
+description = "Check for missing migrations"
+commands = [["uv", "run", "python", "manage.py", "makemigrations", "--check", "--dry-run"]]
