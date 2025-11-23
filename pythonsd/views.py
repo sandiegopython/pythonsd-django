@@ -10,6 +10,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
 from .models import Organizer
+from .models import Sponsor
 
 
 CACHE_DURATION = 60 * 15  # 15 minutes
@@ -20,6 +21,16 @@ class HomePageView(TemplateView):
     """Displays the homepage."""
 
     template_name = "pythonsd/index.html"
+
+    # Maximum number of sponsors to show on the homepage
+    MAX_SPONSORS = 3
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["sponsors"] = Sponsor.objects.filter(active=True).order_by("order")[
+            : self.MAX_SPONSORS
+        ]
+        return context
 
 
 class OrganizersView(TemplateView):

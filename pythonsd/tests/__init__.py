@@ -18,6 +18,7 @@ from django.urls import reverse
 from config import wsgi
 
 from ..models import Organizer
+from ..models import Sponsor
 from ..views import RecentVideosView
 from ..views import UpcomingEventsView
 
@@ -49,11 +50,43 @@ class TestBasicViews(test.TestCase):
 
 
 class TestHomepageView(test.TestCase):
-    def test_homepage(self):
-        response = self.client.get(reverse("index"))
+    def setUp(self):
+        self.url = reverse("index")
+
+    def test_homepage_nosponsor(self):
+        response = self.client.get(self.url)
         self.assertContains(
             response,
             "San Diego Python is a Python programming language special interest group",
+        )
+        self.assertContains(
+            response,
+            "No sponsors at this time",
+        )
+
+    def test_homepage_withsponsor(self):
+        sponsor = Sponsor(
+            name="First Sponsor",
+            website_url="http://example.com/",
+            description="A great sponsor",
+            logo=SimpleUploadedFile(
+                name="test.png", content=ONE_PIXEL_PNG_BYTES, content_type="image/png"
+            ),
+        )
+        sponsor.save()
+
+        response = self.client.get(self.url)
+        self.assertContains(
+            response,
+            sponsor.name,
+        )
+        self.assertContains(
+            response,
+            sponsor.description,
+        )
+        self.assertNotContains(
+            response,
+            "No sponsors at this time",
         )
 
 

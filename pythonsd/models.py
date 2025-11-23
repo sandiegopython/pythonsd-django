@@ -20,3 +20,33 @@ class Organizer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Sponsor(models.Model):
+    """Meetup sponsors - displayed on the home page page."""
+
+    name = models.CharField(max_length=255)
+    website_url = models.URLField(
+        max_length=1024,
+        blank=True,
+        default="",
+    )
+    description = models.TextField(blank=True, default="")
+    logo = models.ImageField(
+        upload_to="sponsors/",
+        help_text="Recommended size of 300*300px or larger square",
+    )
+    active = models.BooleanField(
+        default=True,
+        help_text="Set to False to hide this sponsor from the sponsors page",
+    )
+    order = models.PositiveSmallIntegerField(
+        default=0,
+        help_text="Sponsors are displayed in ascending order of this value",
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("order",)

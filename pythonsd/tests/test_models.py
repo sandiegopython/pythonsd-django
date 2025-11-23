@@ -1,7 +1,9 @@
 from django import test
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from ..admin import SponsorAdmin
 from ..models import Organizer
+from ..models import Sponsor
 
 
 # Bytes representing a valid 1-pixel PNG
@@ -36,3 +38,25 @@ class TestOrganizer(test.TestCase):
 
     def test_str(self):
         self.assertEqual(str(self.org1), self.org1.name)
+
+
+class TestSponsor(test.TestCase):
+    def setUp(self):
+        self.sponsor = Sponsor(
+            name="First Sponsor",
+            website_url="http://example.com/",
+            logo=SimpleUploadedFile(
+                name="test.png", content=ONE_PIXEL_PNG_BYTES, content_type="image/png"
+            ),
+        )
+        self.sponsor.save()
+
+    def test_str(self):
+        self.assertEqual(str(self.sponsor), self.sponsor.name)
+
+    def test_sponsor_admin(self):
+        """Test the sponsor admin - displaying the logo."""
+        admin = SponsorAdmin(Sponsor, None)
+
+        self.assertEqual(admin.display_logo(None), "")
+        self.assertIn(self.sponsor.logo.url, admin.display_logo(self.sponsor))

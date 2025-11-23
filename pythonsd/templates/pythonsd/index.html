@@ -68,23 +68,25 @@
         <h2>Sponsors</h2>
         <p>These fine companies help to make San Diego Python a success.</p>
 
-        <figure class="flex items-center space-x-4">
-          <img src="{% static 'img/sponsors/qualcomm-logo.png' %}" class="flex-none h-16" alt="Qualcomm">
-          <figcaption class="flex-auto">
-            <h5 class="mt-0 mb-1"><a href="https://www.qualcomm.com/" rel="nofollow noopener noreferrer">Qualcomm</a></h5>
-            <p class="m-0">Qualcomm provides the venue for our monthly meetup.</p>
-          </figcaption>
-        </figure>
+        {% if sponsors %}
+          {% for sponsor in sponsors %}
+            <figure class="flex items-center space-x-4 mb-4">
+              <img src="{{ sponsor.logo.url }}" class="flex-none h-16" alt="{{ sponsor.name }}">
+              <figcaption class="flex-auto">
+                <h5 class="mt-0 mb-1"><a href="{{ sponsor.website_url }}" rel="nofollow noopener noreferrer">{{ sponsor.name }}</a></h5>
+                <p class="m-0">{{ sponsor.description }}</p>
+              </figcaption>
+            </figure>
+          {% endfor %}
+        {% else %}
+          <!-- No sponsors at this time. -->
+        {% endif %}
 
-        <figure class="flex items-center space-x-4">
-          <img src="{% static 'img/sponsors/neo4j-logo.png' %}" class="flex-none h-16" alt="Neo4j">
-          <figcaption class="flex-auto">
-            <h5 class="mt-0 mb-1"><a href="https://neo4j.com/" rel="nofollow noopener noreferrer">Neo4j</a></h5>
-            <p class="m-0">Neo4j is providing food at our monthly meetup.</p>
-          </figcaption>
-        </figure>
-
-        <p class="text-sm">You can <a href="https://psfmember.org/civicrm/contribute/transact/?reset=1&id=9">donate to San Diego Python</a> through the PSF. Your donation may be tax deductible. All donations go toward events, workshops, and training materials.</p>
+        <p class="text-sm">
+          <span>You can <a href="https://psfmember.org/civicrm/contribute/transact/?reset=1&id=9">donate to San Diego Python</a> through the PSF.</span>
+          <span>Your donation may be tax deductible. All donations go toward events, workshops, and training materials.</span>
+          <span>Interested in sponsoring the meetup? Get in touch with the <a href="{% url 'organizers' %}">organizers</a>.</span>
+        </p>
 
       </div>
 
