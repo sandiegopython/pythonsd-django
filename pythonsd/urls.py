@@ -4,7 +4,9 @@ from django.urls import re_path
 from django.views import generic
 
 from . import views
-from .sitemap import IndexSitemap, StaticViewSitemap
+from .sitemap import IndexSitemap
+from .sitemap import StaticViewSitemap
+
 
 sitemaps = {
     "index": IndexSitemap,

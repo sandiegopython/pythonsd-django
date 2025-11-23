@@ -1,14 +1,13 @@
-from datetime import datetime
-import zoneinfo
 import logging
-
-from django.conf import settings
-from django.views.decorators.cache import cache_page
-from django.views.generic import TemplateView
-from django.utils.decorators import method_decorator
+import zoneinfo
+from datetime import datetime
 
 import requests
 from defusedxml import ElementTree
+from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.generic import TemplateView
 
 from .models import Organizer
 
@@ -146,7 +145,6 @@ class RecentVideosView(TemplateView):
         log.debug("Requesting recent videos feed from YouTube")
 
         try:
-
             resp = requests.get(self.YOUTUBE_FEED_URL, timeout=5)
         except Exception:
             # This is a broad exception because this can throw a pretty wide range

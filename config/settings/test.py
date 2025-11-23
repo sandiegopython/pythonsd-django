@@ -20,6 +20,11 @@ STORAGES = {
     },
 }
 
+# Disable logging during tests to keep the output clean
+for logger in LOGGING["loggers"].values():
+    logger["handlers"] = ["null"]
+    logger["level"] = "CRITICAL"
+
 
 # Ignore whitenoise message about no static directory
 warnings.filterwarnings("ignore", message="No directory at", module="whitenoise.base")

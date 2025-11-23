@@ -9,6 +9,13 @@ LABEL maintainer="https://github.com/sandiegopython"
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# uv environment variables
+# Copy (don't hardlink) files into /.venv. Avoid issues with Docker's FS
+# https://docs.astral.sh/uv/reference/environment/
+ENV UV_LINK_MODE=copy
+ENV UV_PYTHON_DOWNLOADS=never
+ENV UV_PROJECT_ENVIRONMENT=/.venv
+
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends curl
 
@@ -25,16 +32,18 @@ RUN apt-get install -y --no-install-recommends \
     postgresql-client libpq-dev \
     git
 
-RUN mkdir -p /code
-
+RUN mkdir -p /code /home/www/
 WORKDIR /code
 
-# Requirements are installed here to ensure they will be cached.
-# https://docs.docker.com/build/cache/#use-the-dedicated-run-cache
-COPY ./requirements /requirements
-RUN pip install --upgrade pip
-RUN --mount=type=cache,target=/root/.cache/pip pip install -r /requirements/deployment.txt
-RUN --mount=type=cache,target=/root/.cache/pip pip install -r /requirements/local.txt
+# Install uv for fast package management
+# https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
+COPY --from=ghcr.io/astral-sh/uv:0.9.11 /uv /uvx /bin/
+
+# Copy project files for dependency resolution
+# uv.lock ensures reproducible builds
+COPY pyproject.toml uv.lock ./
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-install-project --all-extras
 
 COPY . /code/
 
@@ -42,11 +51,21 @@ COPY . /code/
 RUN --mount=type=cache,target=/root/.npm npm install
 RUN npm run dist
 
-RUN python manage.py collectstatic --noinput --clear
+RUN uv run python manage.py collectstatic --noinput --clear
+
+# Launches the application (gunicorn) with this script
+COPY ./docker/start /start
+RUN chmod +x /start
+
+# Launch a shell within the container with this script
+COPY ./docker/shell /shell
+RUN chmod +x /shell
 
 # Run the container unprivileged
 RUN addgroup www && useradd -g www www
 RUN chown -R www:www /code
+# Needed for the uv cache
+RUN chown -R www:www /home/www
 USER www
 
 # Output information about the build
@@ -56,4 +75,4 @@ RUN date -u +'%Y-%m-%dT%H:%M:%SZ' > BUILD_DATE
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--timeout", "15", "--bind", ":8000", "--workers", "2", "--max-requests", "10000", "--max-requests-jitter", "100", "--log-file", "-", "--access-logfile", "-", "config.wsgi"]
+CMD ["/start"]

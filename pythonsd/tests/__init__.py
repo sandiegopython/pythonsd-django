@@ -8,17 +8,18 @@ import os
 import unittest
 from unittest import mock
 
-from django import test
-from django.core.cache import cache
-from django.urls import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
 import responses
 import webtest
+from django import test
+from django.core.cache import cache
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse
 
 from config import wsgi
+
+from ..models import Organizer
 from ..views import RecentVideosView
 from ..views import UpcomingEventsView
-from ..models import Organizer
 
 
 # Bytes representing a valid 1-pixel PNG
@@ -124,7 +125,7 @@ class TestMeetupEventsView(test.TestCase):
     def test_no_events(self):
         with mock.patch(
             "pythonsd.views.UpcomingEventsView.get_upcoming_events", return_value=[]
-        ) as mock_get:
+        ):
             response = self.client.get(self.url)
             self.assertContains(response, "There are no upcoming events")
 
@@ -132,7 +133,7 @@ class TestMeetupEventsView(test.TestCase):
         with mock.patch(
             "pythonsd.views.UpcomingEventsView.get_upcoming_events",
             return_value=self.expected_events,
-        ) as mock_get:
+        ):
             response = self.client.get(self.url)
             self.assertContains(response, "Qualcomm Building Q")
             self.assertContains(response, "SDPy Monthly Meetup")
@@ -216,7 +217,7 @@ class TestYouTubeRecentVideosView(test.TestCase):
     def test_no_videos(self):
         with mock.patch(
             "pythonsd.views.RecentVideosView.get_recent_videos", return_value=[]
-        ) as mock_get:
+        ):
             response = self.client.get(self.url)
             self.assertContains(response, "Check out our")
 
@@ -224,7 +225,7 @@ class TestYouTubeRecentVideosView(test.TestCase):
         with mock.patch(
             "pythonsd.views.RecentVideosView.get_recent_videos",
             return_value=self.expected_videos,
-        ) as mock_get:
+        ):
             response = self.client.get(self.url)
             self.assertContains(response, "MvpiCyPpAhM")
             self.assertContains(response, "<iframe")
