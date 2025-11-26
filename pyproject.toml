@@ -1,6 +1,6 @@
 [project]
 name = "pythonsd-django"
-version = "0.2.0"
+version = "0.3.0"
 description = "San Diego Python website - sandiegopython.org"
 requires-python = ">=3.14, <3.15"
 dependencies = [
