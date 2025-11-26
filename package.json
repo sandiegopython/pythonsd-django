@@ -1,6 +1,6 @@
 {
   "name": "pythonsd-django",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "San Diego Python Website - sandiegopython.org",
   "scripts": {
     "dist": "npx @tailwindcss/cli -i ./assets/src/input.css -o ./assets/dist/main.css --minify",
