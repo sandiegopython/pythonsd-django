@@ -76,6 +76,7 @@ redirects = [
             url="https://discord.gg/8GpWuVvdbQ",
             permanent=False,
         ),
+        name="redirect_discord",
     ),
     path(
         r"youtube/",
@@ -83,6 +84,15 @@ redirects = [
             url="https://www.youtube.com/@sandiegopython/streams",
             permanent=False,
         ),
+        name="redirect_youtube",
+    ),
+    path(
+        r"give-a-presentation/",
+        generic.RedirectView.as_view(
+            url="https://docs.google.com/forms/d/e/1FAIpQLSfBUQjcSrnG7Afi-Uz6ewgFz45Vquea2Vj5egTEmTmoUAUHSg/viewform",
+            permanent=False,
+        ),
+        name="redirect_presentation",
     ),
 ]
 
