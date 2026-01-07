@@ -87,7 +87,7 @@ redirects = [
         name="redirect_youtube",
     ),
     path(
-        r"give-a-presentation/",
+        r"present/",
         generic.RedirectView.as_view(
             url="https://docs.google.com/forms/d/e/1FAIpQLSfBUQjcSrnG7Afi-Uz6ewgFz45Vquea2Vj5egTEmTmoUAUHSg/viewform",
             permanent=False,
