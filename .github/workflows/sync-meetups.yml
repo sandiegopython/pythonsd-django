@@ -1,0 +1,32 @@
+name: Sync YouTube Meetups
+
+# Tells sandiegopython.org to ingest the latest YouTube videos
+#
+# Runs on Friday (our monthly meetup livestream is the 4th Thursday)
+# and makes an authenticated request to the server to ingest videos.
+# The videos *should* have timestamps updated by then which are important
+# for the ingestion process and let us link to specific talks.
+
+on:
+  schedule:
+    # Run every Friday at 22:00 UTC (~15:00 PT)
+    - cron: '0 22 * * 5'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync Meetups from YouTube
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger YouTube ingest endpoint
+        env:
+          YOUTUBE_SYNC_SECRET: ${{ secrets.YOUTUBE_SYNC_SECRET }}
+        run: |
+          if [ -z "$YOUTUBE_SYNC_SECRET" ]; then
+            echo "YOUTUBE_SYNC_SECRET is not configured. Skipping sync."
+            exit 0
+          fi
+          echo "Calling YouTube ingest endpoint..."
+          curl -s -S -L --fail-with-body -X POST \
+            -H "Authorization: Bearer $YOUTUBE_SYNC_SECRET" \
+            https://sandiegopython.org/api/youtube-ingest/

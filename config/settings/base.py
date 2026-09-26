@@ -227,3 +227,13 @@ APP_REVISION = None
 if os.path.exists(os.path.join(BASE_DIR, "GIT_COMMIT")):
     with open(os.path.join(BASE_DIR, "GIT_COMMIT"), encoding="utf-8") as fd:
         APP_REVISION = fd.read().strip()
+
+# YouTube configuration
+YOUTUBE_CHANNEL_ID = os.environ.get("YOUTUBE_CHANNEL_ID", "UCXU-oZwaHnoYUhja_yrrrGg")
+YOUTUBE_FEED_URL = (
+    f"https://www.youtube.com/feeds/videos.xml?channel_id={YOUTUBE_CHANNEL_ID}"
+)
+
+# Shared secret for YouTube video metadata ingestion webhook
+# This will be used by GH Actions to call an endpoint to ingest new videos/meetups
+YOUTUBE_SYNC_SECRET = os.environ.get("YOUTUBE_SYNC_SECRET", None)

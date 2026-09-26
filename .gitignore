@@ -135,3 +135,4 @@ dmypy.json
 /pythonsd/static/css/
 /GIT_COMMIT
 /BUILD_DATE
+/meetups*.json

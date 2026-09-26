@@ -5,12 +5,14 @@ from django.views import generic
 
 from . import views
 from .sitemap import IndexSitemap
+from .sitemap import MeetupYearSitemap
 from .sitemap import StaticViewSitemap
 
 
 sitemaps = {
     "index": IndexSitemap,
     "static": StaticViewSitemap,
+    "meetups": MeetupYearSitemap,
 }
 
 
@@ -30,6 +32,22 @@ urlpatterns = [
         views.OrganizersView.as_view(template_name="pythonsd/organizers.html"),
         name="organizers",
     ),
+    path(
+        r"meetups/",
+        views.MeetupsArchiveView.as_view(),
+        name="meetups_archive",
+    ),
+    path(
+        r"meetups/<int:year>/",
+        views.MeetupYearView.as_view(),
+        name="meetup_year",
+    ),
+    # API endpoints
+    path(
+        r"api/youtube-ingest/",
+        views.YouTubeIngestView.as_view(),
+        name="youtube_ingest",
+    ),
     # XHR/Async requests
     path(r"xhr/events/", views.UpcomingEventsView.as_view(), name="upcoming_events"),
     path(r"xhr/videos/", views.RecentVideosView.as_view(), name="recent_videos"),
@@ -40,6 +58,7 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
 ]
+
 
 # These redirects handle redirecting URLs from the old static site to the new Django site
 redirects = [
