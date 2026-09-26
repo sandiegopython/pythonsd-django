@@ -42,10 +42,15 @@
               <a class="text-slate-100 hover:text-slate-300" href="{% if request.path != conduct_url %}{{ conduct_url }}{% else %}#{% endif %}">Code of Conduct</a>
             </li>
             <li class="py-2 md:mr-5">
+              {% url 'meetups_archive' as meetups_url %}
+              <a class="text-slate-100 hover:text-slate-300" href="{% if request.path != meetups_url %}{{ meetups_url }}{% else %}#{% endif %}">Past Meetups</a>
+            </li>
+            <li class="py-2 md:mr-5">
               {% url 'organizers' as organizers_url %}
               <a class="text-slate-100 hover:text-slate-300" href="{% if request.path != organizers_url %}{{ organizers_url }}{% else %}#{% endif %}">Organizers</a>
             </li>
           </ul>
+
         </div>
       </nav>
     </header>

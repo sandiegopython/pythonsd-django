@@ -1,3 +1,4 @@
+import hmac
 import logging
 import zoneinfo
 from datetime import datetime
@@ -5,12 +6,21 @@ from datetime import datetime
 import requests
 from defusedxml import ElementTree
 from django.conf import settings
+from django.http import Http404
+from django.http import HttpResponseForbidden
+from django.http import HttpResponseNotAllowed
+from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
+from .models import Meetup
 from .models import Organizer
 from .models import Sponsor
+from .youtube import fetch_and_sync_youtube_feed
 
 
 CACHE_DURATION = 60 * 15  # 15 minutes
@@ -139,10 +149,8 @@ class RecentVideosView(TemplateView):
     """Get recent videos from YouTube."""
 
     # Our channel ID (eg. https://www.youtube.com/channel/UCXU-oZwaHnoYUhja_yrrrGg)
-    YOUTUBE_CHANNEL_ID = "UCXU-oZwaHnoYUhja_yrrrGg"
-    YOUTUBE_FEED_URL = (
-        f"https://www.youtube.com/feeds/videos.xml?channel_id={YOUTUBE_CHANNEL_ID}"
-    )
+    YOUTUBE_CHANNEL_ID = settings.YOUTUBE_CHANNEL_ID
+    YOUTUBE_FEED_URL = settings.YOUTUBE_FEED_URL
 
     template_name = "pythonsd/fragments/recent-videos.html"
 
@@ -189,3 +197,70 @@ class RecentVideosView(TemplateView):
             log.error("Error fetching YouTube video feed")
 
         return videos
+
+
+class MeetupsArchiveView(View):
+    """Redirects /meetups/ to the most recent year with a meetup."""
+
+    def get(self, request, *args, **kwargs):
+        latest_year = (
+            Meetup.objects.order_by("-date")
+            .values_list("date__year", flat=True)
+            .first()
+        )
+        if not latest_year:
+            raise Http404("No meetups found.")
+        return redirect("meetup_year", year=latest_year)
+
+
+class MeetupYearView(TemplateView):
+    """Displays all meetups and talks for a specific year."""
+
+    template_name = "pythonsd/meetup_year.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        year = self.kwargs["year"]
+        meetups = (
+            Meetup.objects.filter(date__year=year)
+            .prefetch_related("talks")
+            .order_by("-date")
+        )
+        if not meetups.exists():
+            raise Http404(f"No meetups found for year {year}")
+
+        context["year"] = year
+        context["meetups"] = meetups
+        context["all_years"] = [
+            d.year for d in Meetup.objects.dates("date", "year", order="DESC")
+        ]
+        return context
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class YouTubeIngestView(View):
+    """Endpoint for ingesting YouTube videos via webhook."""
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseNotAllowed(["POST"])
+
+    def post(self, request, *args, **kwargs):
+        secret = getattr(settings, "YOUTUBE_SYNC_SECRET", None)
+        if not secret:
+            return HttpResponseForbidden("Sync secret is not configured.")
+
+        auth_header = request.headers.get("Authorization", "")
+        expected_header = f"Bearer {secret}"
+
+        if not hmac.compare_digest(auth_header, expected_header):
+            return HttpResponseForbidden("Invalid or missing authorization token.")
+
+        try:
+            stats = fetch_and_sync_youtube_feed()
+            return JsonResponse({"status": "ok", **stats})
+        except Exception:
+            log.exception("Error syncing YouTube feed")
+            return JsonResponse(
+                {"status": "error", "message": "Failed to sync YouTube feed"},
+                status=500,
+            )
