@@ -29,4 +29,4 @@ jobs:
           echo "Calling YouTube ingest endpoint..."
           curl -s -S -L --fail-with-body -X POST \
             -H "Authorization: Bearer $YOUTUBE_SYNC_SECRET" \
-            https://sandiegopython.org/api/youtube-ingest/
+            https://www.sandiegopython.org/api/youtube-ingest/
